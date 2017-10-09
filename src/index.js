@@ -1,8 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import './assets/css/bootstrap.min.css'
+//import App from './App';
+import { BrowserRouter as Router,withRouter} from 'react-router-dom';
+import Main from './component/main/Main.jsx';
+//import Login from './component/login/Login.jsx';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+
+const App=()=>(<Router>
+				<Main />
+			</Router>);
+
+ReactDOM.render(<App/>, document.getElementById('root'));
 registerServiceWorker();
