@@ -459,7 +459,7 @@ class SideNav extends Component{
 											<li className="todo-item">
 												<div className="checkbox checkbox-default">
 													<input type="checkbox" id="checkbox01"/>
-													<label for="checkbox01">Record The First Episode</label>
+													<label htmlFor="checkbox01">Record The First Episode</label>
 												</div>
 											</li>
 											<li>
@@ -468,7 +468,7 @@ class SideNav extends Component{
 											<li className="todo-item">
 												<div className="checkbox checkbox-pink">
 													<input type="checkbox" id="checkbox02"/>
-													<label for="checkbox02">Prepare The Conference Schedule</label>
+													<label htmlFor="checkbox02">Prepare The Conference Schedule</label>
 												</div>
 											</li>
 											<li>
@@ -476,8 +476,8 @@ class SideNav extends Component{
 											</li>
 											<li className="todo-item">
 												<div className="checkbox checkbox-warning">
-													<input type="checkbox" id="checkbox03" checked/>
-													<label for="checkbox03">Decide The Live Discussion Time</label>
+													<input type="checkbox" id="checkbox03" defaultChecked/>
+													<label htmlFor="checkbox03">Decide The Live Discussion Time</label>
 												</div>
 											</li>
 											<li>
@@ -485,8 +485,8 @@ class SideNav extends Component{
 											</li>
 											<li className="todo-item">
 												<div className="checkbox checkbox-success">
-													<input type="checkbox" id="checkbox04" checked/>
-													<label for="checkbox04">Prepare For The Next Project</label>
+													<input type="checkbox" id="checkbox04" defaultChecked/>
+													<label htmlFor="checkbox04">Prepare For The Next Project</label>
 												</div>
 											</li>
 											<li>
@@ -494,8 +494,8 @@ class SideNav extends Component{
 											</li>
 											<li className="todo-item">
 												<div className="checkbox checkbox-danger">
-													<input type="checkbox" id="checkbox05" checked/>
-													<label for="checkbox05">Finish Up AngularJs Tutorial</label>
+													<input type="checkbox" id="checkbox05" defaultChecked/>
+													<label htmlFor="checkbox05">Finish Up AngularJs Tutorial</label>
 												</div>
 											</li>
 											<li>
@@ -503,8 +503,8 @@ class SideNav extends Component{
 											</li>
 											<li className="todo-item">
 												<div className="checkbox checkbox-purple">
-													<input type="checkbox" id="checkbox06" checked/>
-													<label for="checkbox06">Finish Infinity Project</label>
+													<input type="checkbox" id="checkbox06" defaultChecked/>
+													<label htmlFor="checkbox06">Finish Infinity Project</label>
 												</div>
 											</li>
 											<li>

@@ -5,7 +5,7 @@ import Footer from '../footer/Footer.jsx'
 import Home from '../home/Home.jsx'
 import CarStand from '../carstand/CarStand.jsx'
 import Login from '../login/Login.jsx';
-import SideNav from '../sidenav/SideNav.jsx'
+import SideNav from '../sidenav/SideNav.jsx';
 import {Link,Route,Switch,Redirect} from 'react-router-dom';
  
 

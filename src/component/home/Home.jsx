@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Home.css';
 import {Link} from 'react-router-dom';
 import {Table} from '../tables/Table.jsx' 
+import Formy from '../form/Form.jsx'
 
 
 class Home extends Component{
@@ -23,6 +24,7 @@ class Home extends Component{
 					<div class="panel-wrapper collapse in">
 						<div class="panel-body row pa-0">
 							<Table/>
+							<Formy/>
 						</div>
 					</div>
 				</div>

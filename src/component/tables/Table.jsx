@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 export const Table = ({props})=>{
 	return (
 		<div className="table-responsive">
-					<table class='table'>
+					<table className='table'>
 						<thead>
 							<tr>
 								<th>#</th>

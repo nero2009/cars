@@ -16,12 +16,12 @@ class CarStand extends Component{
 	render(){
 		return (
 			<div>
-				<div class="panel panel-default card-view panel-refresh">
-					<div class="panel-heading">
-						<div class="clearfix"></div>
+				<div className="panel panel-default card-view panel-refresh">
+					<div className="panel-heading">
+						<div className="clearfix"></div>
 					</div>
-					<div class="panel-wrapper collapse in">
-						<div class="panel-body row pa-0">
+					<div className="panel-wrapper collapse in">
+						<div className="panel-body row pa-0">
 							<Table/>
 						</div>
 					</div>
