@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import './Home.css';
+import './CarStand.css';
 import {Link} from 'react-router-dom';
 import {Table} from '../tables/Table.jsx' 
 
 
-class Home extends Component{
+class CarStand extends Component{
 
 	constructor(props){
 			super(props);
@@ -32,4 +32,4 @@ class Home extends Component{
 	}
 }
 
-export default Home;
+export default CarStand;

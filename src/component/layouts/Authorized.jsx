@@ -3,6 +3,7 @@ import './Authorized.css';
 import Nav from '../nav/Nav.jsx'
 import Footer from '../footer/Footer.jsx'
 import Home from '../home/Home.jsx'
+import CarStand from '../carstand/CarStand.jsx'
 import Login from '../login/Login.jsx';
 import SideNav from '../sidenav/SideNav.jsx'
 import {Link,Route,Switch,Redirect} from 'react-router-dom';
@@ -30,11 +31,15 @@ class Authorized extends Component{
 				<main className="page-wrapper">
             <div className="container-fluid pt-25">
 				<div className="row">
-					<Switch>
+					<div className="col-md-12">
+						<Switch>
 				        <Route path={this.props.match.path} exact component={Home} />
+				         <Route path={`${this.props.match.path}/car-stand`} component={CarStand} />
 				        <Route path={`${this.props.match.path}/foo`} component={Login} />
 				        <Redirect to="/" />
 				     </Switch>
+					</div>
+					
 				</div>
 			</div>
 				     <Footer/>
