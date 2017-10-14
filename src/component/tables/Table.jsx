@@ -1,49 +1,72 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 
+if (!Object.keys) {
+  Object.keys = (function() {
+    'use strict';
+    var hasOwnProperty = Object.prototype.hasOwnProperty,
+        hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString'),
+        dontEnums = [
+          'toString',
+          'toLocaleString',
+          'valueOf',
+          'hasOwnProperty',
+          'isPrototypeOf',
+          'propertyIsEnumerable',
+          'constructor'
+        ],
+        dontEnumsLength = dontEnums.length;
 
-export const Table = ({props})=>{
+    return function(obj) {
+      if (typeof obj !== 'function' && (typeof obj !== 'object' || obj === null)) {
+        throw new TypeError('Object.keys called on non-object');
+      }
+
+      var result = [], prop, i;
+
+      for (prop in obj) {
+        if (hasOwnProperty.call(obj, prop)) {
+          result.push(prop);
+        }
+      }
+
+      if (hasDontEnumBug) {
+        for (i = 0; i < dontEnumsLength; i++) {
+          if (hasOwnProperty.call(obj, dontEnums[i])) {
+            result.push(dontEnums[i]);
+          }
+        }
+      }
+      return result;
+    };
+  }());
+}
+
+
+export const Table = (props)=>{
+	let keyss;
 	return (
 		<div className="table-responsive">
 					<table className='table'>
 						<thead>
 							<tr>
-								<th>#</th>
-								<th>First Name</th>
-								<th>Last name</th>
-								<th>UserName</th>
-								<th>Role</th>
+							{
+								props.headers.map((item,index)=><th key={++index}>{item}</th>)
+							}
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<th>1</th>
-								<td>Mark</td>
-								<td>Otto</td>
-								<td>Oto</td>
-								<td>Engineer</td>
-							</tr>
-							<tr>
-								<th>2</th>
-								<td>Jacob</td>
-								<td>Tunde</td>
-								<td>Tunen</td>
-								<td>DevOps</td>
-							</tr>
-							<tr>
-								<th>3</th>
-								<td>Larry</td>
-								<td>Bird</td>
-								<td>Birdman</td>
-								<td>Work</td>
-							</tr>
-							<tr>
-								<th>4</th>
-								<td>New</td>
-								<td>Man</td>
-								<td>Newman</td>
-								<td>Artist</td>
-							</tr>
+						{
+							props.rows.map((item,index)=>{
+								keyss=Object.keys(item);
+
+							return (<tr key={++index}>
+										{keyss.map((key,index)=> <th key={++index}>{item[key]}</th>)}
+									</tr>)
+
+								})
+							}
+							
 						</tbody>
 					</table>
 				</div>
