@@ -10,8 +10,8 @@ class ViewAgents extends Component{
 
 	componentDidMount() {
 		this.setState({
-			header:['#','Name','DealershipName','Contact','Contact No','State'],
-			rows:[{no:1,name:'nero ',dealershipName:'global inc',contact:'surulere',Phone:234,stateName:'Lagos'}]
+			header:['#','Dealership Name','Contact name','Contact No','State',<i className="fa fa-gear"></i>],
+			rows:[{no:1,dealershipName:'global inc',contact:'surulere',Phone:234,stateName:'Lagos',action:<Link to="#"><i className="fa fa-pencil"></i></Link>}]
 		})
 	}
 

@@ -42,24 +42,19 @@ class CreateAgents extends Component{
 							<div className="panel-body">
 								<form >
 									<div className="form-group">
-
 										<label htmlFor="">
-											Name
-										</label>
-										<input className="form-control" name="name" value={this.state.name} onChange={this.handleInputChange} />
-									</div>
-									<div className="form-group">
-										<label htmlFor="">
-											DealershipName
+											Dealership Name
 										</label>
 										<input className="form-control" name="dealershipName" value={this.state.dealershipName} onChange={this.handleInputChange} />
 									</div>
 									<div className="form-group">
 										<label htmlFor="">
-											Contact Address
+											Contact Name
 										</label>
 										<input className="form-control" name="contact" value={this.state.contact} onChange={this.handleInputChange} />
 									</div>
+									
+									
 									<div className="form-group">
 										<label htmlFor="">
 											Phone No
@@ -76,6 +71,7 @@ class CreateAgents extends Component{
 										  
 										</select>
 									</div>
+									
 									<div className="form-actions mt-10">
 										<button type="button" className="btn btn-success  mr-10" onClick={this.submit}> Submit</button>
 										<button type="button" className="btn btn-default" onClick={this.clear}>Cancel</button>

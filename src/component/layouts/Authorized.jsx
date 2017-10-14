@@ -26,9 +26,7 @@ class Authorized extends Component{
 	render(){
 		return (
 			<div>
-				<div className="preloader-it">
-				<div className="la-anim-1"></div>
-			</div>
+				
 				<div className="wrapper theme-1-active pimary-color-red" >
 				<Nav/>
 				<SideNav/>
