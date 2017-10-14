@@ -8539,6 +8539,18 @@ ul.inbox-nav li a:hover, ul.inbox-nav li.active a, ul.inbox-nav li a:focus {
     padding-left: 0;
     padding-right: 0;
   }
+  .btn{
+    color: #fff;
+    padding: 10px 25px;
+    text-transform: capitalize;
+    border-radius: 2px;
+    outline: none;
+    box-shadow: none;
+    border: none;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
 
   .slide-nav-toggle .fixed-sidebar-left {
     margin-left: 0;

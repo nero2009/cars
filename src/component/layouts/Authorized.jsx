@@ -15,6 +15,7 @@ class Authorized extends Component{
 
 	constructor(props){
 			super(props);
+			this.state={name:'',stateId:'',location:'',receivedStates:[]};
 	}
 	componentDidMount(){
 		
@@ -29,7 +30,7 @@ class Authorized extends Component{
 				<div className="wrapper theme-1-active pimary-color-red" >
 				<Nav/>
 				<SideNav/>
-				<main className="page-wrapper">
+				<main className="page-wrapper" style={{minHeight:window.innerHeight}}>
             <div className="container-fluid pt-25">
 				<div className="row">
 					<div className="col-md-12">
