@@ -7,6 +7,8 @@ import CarStand from '../carstand/CarStand.jsx'
 import Login from '../login/Login.jsx';
 import SideNav from '../sidenav/SideNav.jsx';
 import CreateCarStand from '../carstand/CreateCarStand.jsx'
+import CreateAgents from '../Agents/CreateAgents.jsx'
+import ViewAgents from '../Agents/ViewAgents.jsx'
 import {Link,Route,Switch,Redirect} from 'react-router-dom';
  
 
@@ -39,6 +41,8 @@ class Authorized extends Component{
 				         <Route path={`${this.props.match.path}/car-stand`} component={CarStand} />
 				        <Route path={`${this.props.match.path}/foo`} component={Login} />
 				        <Route path={`${this.props.match.path}/create-car-stand`} component={CreateCarStand}/>
+				        <Route path={`${this.props.match.path}/create-agents`} component={CreateAgents}/>
+				        <Route path={`${this.props.match.path}/view-agents`} component={ViewAgents}/>
 				        <Redirect to="/" />
 				     </Switch>
 					</div>
