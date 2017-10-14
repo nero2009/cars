@@ -13,6 +13,8 @@ import ViewMessage from '../message/ViewMessage.jsx'
 import ViewAgents from '../Agents/ViewAgents.jsx'
 import CreateSales from '../sales/CreateSales.jsx'
 import ViewSales from '../sales/ViewSales.jsx'
+import CreateVehicles from '../vehicles/CreateVehicles.jsx'
+import ViewVehicles from '../vehicles/ViewVehicles.jsx'
 import {Link,Route,Switch,Redirect} from 'react-router-dom';
  
 
@@ -49,6 +51,8 @@ class Authorized extends Component{
 				        <Route path={`${this.props.match.path}/view-message`} component={ViewMessage}/>
 				        <Route path={`${this.props.match.path}/create-sales`} component={CreateSales}/>
 				        <Route path={`${this.props.match.path}/view-sales`} component={ViewSales}/>
+				        <Route path={`${this.props.match.path}/create-vehicles`} component={CreateVehicles}/>
+				        <Route path={`${this.props.match.path}/view-vehicles`} component={ViewVehicles}/>
 				        <Redirect to="/" />
 				     </Switch>
 					</div>
