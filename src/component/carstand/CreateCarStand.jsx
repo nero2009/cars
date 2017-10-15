@@ -26,10 +26,9 @@ class CreateCarStand extends Component{
 		const {stateId,name,location}=this.state;
 		const data={
 				stateId,
-				name,
-				location
+				name:name.trim(),
+				location:location.trim()
 		}
-		
         
 		this.props.failedRequest.call(this,"Car stand not created.");
 

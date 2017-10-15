@@ -39,10 +39,10 @@ class SideNav extends Component{
 					<a className="active" href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div className="pull-left"><i className="zmdi zmdi-car mr-20"></i><span className="right-nav-text">Vehicles</span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
 					<ul id="ecom_dr" className="collapse collapse-level-1">
 						<li>
-							<a href="#">Vehicle List</a>
+							<Link to="/home/view-vehicles">Vehicle List</Link>
 						</li>
 						<li>
-							<a href="#">Add New</a>
+							<Link to="/home/create-vehicles">Add New</Link>
 						</li>
 					</ul>
 				</li>

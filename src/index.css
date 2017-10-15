@@ -8722,6 +8722,10 @@ ul.inbox-nav li a:hover, ul.inbox-nav li.active a, ul.inbox-nav li a:focus {
     margin-left: 10px;
   }
 }
+
+.swal-overlay {
+    overflow-y: unset !important;
+  }
 @media (max-width: 991px) {
   .dataTables_wrapper .dataTables_length {
     display: none;
