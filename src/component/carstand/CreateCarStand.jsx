@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 
+
 class CreateCarStand extends Component{
 	constructor(props) {
 		super(props);
 		this.handleInputChange=this.handleInputChange.bind(this);
 		this.submit=this.submit.bind(this);
 		this.clear=this.clear.bind(this);
-		this.state={name:'',stateId:'',location:'',receivedStates:[]};
+		this.state={name:'',stateId:'',location:'',receivedStates:[],submitBtn:this.props.submitBtn,disabled:false};
 
 		
 	}
@@ -21,13 +22,16 @@ class CreateCarStand extends Component{
 		this.setState({name:'',stateId:'',location:''})
 	}
 	submit(){
+		this.props.startRequest.call(this);
 		const {stateId,name,location}=this.state;
 		const data={
 				stateId,
 				name,
 				location
 		}
-		alert(data)
+		
+        
+		this.props.failedRequest.call(this,"Car stand not created.");
 
 	}
 
@@ -69,8 +73,8 @@ class CreateCarStand extends Component{
 						</div>
 
 						<div className="form-actions mt-10">
-							<button type="button" className="btn btn-success  mr-10" onClick={this.submit}> Submit</button>
-							<button type="button" className="btn btn-default" onClick={this.clear}>Cancel</button>
+							<button type="button" className="btn btn-success  mr-10" disabled={this.state.disabled} onClick={this.submit}> {this.state.submitBtn}</button>
+							<button type="button" className="btn btn-default" disabled={this.state.disabled} onClick={this.clear}>Cancel</button>
 						</div>
 						
 					</form>

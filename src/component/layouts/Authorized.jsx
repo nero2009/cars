@@ -17,7 +17,6 @@ class Authorized extends Component{
 
 	constructor(props){
 			super(props);
-			this.state={name:'',stateId:'',location:'',receivedStates:[]};
 	}
 	componentDidMount(){
 		
@@ -35,12 +34,12 @@ class Authorized extends Component{
 				<div className="row">
 					<div className="col-md-12">
 						<Switch>
-				        <Route path={this.props.match.path} exact component={Home} />
-				         <Route path={`${this.props.match.path}/car-stand`} component={CarStand} />
-				        <Route path={`${this.props.match.path}/foo`} component={Login} />
-				        <Route path={`${this.props.match.path}/create-car-stand`} component={CreateCarStand}/>
-				        <Route path={`${this.props.match.path}/create-agents`} component={CreateAgents}/>
-				        <Route path={`${this.props.match.path}/view-agents`} component={ViewAgents}/>
+				        <Route path={this.props.match.path} exact render={(props)=>(<Home {...props} {...this.props}/>)} />
+				         <Route path={`${this.props.match.path}/car-stand`} render={(props)=>(<CarStand {...props} {...this.props}/>)}/>
+				        <Route path={`${this.props.match.path}/foo`}  render={(props)=>(<Login {...props} {...this.props}/>)}/>
+				        <Route path={`${this.props.match.path}/create-car-stand`}  render={(props)=>(<CreateCarStand {...props} {...this.props}/>)}/>
+				        <Route path={`${this.props.match.path}/create-agents`} render={(props)=>(<CreateAgents {...props} {...this.props}/>)}/>
+				        <Route path={`${this.props.match.path}/view-agents`} render={(props)=>(<ViewAgents {...props} {...this.props}/>)}/>
 				        <Redirect to="/" />
 				     </Switch>
 					</div>
