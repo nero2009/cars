@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 
-class CreateAgents extends Component{
+class CreateMessages extends Component{
 	constructor(props) {
 		super(props);
 		this.handleInputChange=this.handleInputChange.bind(this);
 		this.submit=this.submit.bind(this);
 		this.clear=this.clear.bind(this);
-		this.state={name:'',dealershipName:'',contact:'',phone:'', stateId:'',receivedStates:[] }
+		this.state={to:'',from:'',subject:'', body:'' }
+		
 	}
 
 	componentDidMount() {
@@ -19,15 +20,14 @@ class CreateAgents extends Component{
 	}
 
 	clear(){
-		this.setState({name:'',dealershipName:'',contact:'',phone:'',stateId:''})
+		this.setState({to:'',from:'',subject:'',body:''})
 	}
 
 	submit(){
-		const {name,dealershipName,contact,phone,stateId} = this.state;
-		const data ={name,dealershipName,contact,phone,stateId}
+		const {to,from,subject,body} = this.state;
+		const data ={to,from,subject,body}
 		alert(data)
 	}
-
 
 
 	render(){
@@ -42,39 +42,28 @@ class CreateAgents extends Component{
 							<div className="panel-body">
 								<form >
 									<div className="form-group">
-
 										<label htmlFor="">
-											Name
+											From
 										</label>
-										<input className="form-control" name="name" value={this.state.name} onChange={this.handleInputChange} />
+										<textarea className="form-control" name="from" value={this.state.from} onChange={this.handleInputChange} ></textarea>
 									</div>
 									<div className="form-group">
 										<label htmlFor="">
-											DealershipName
+											To
 										</label>
-										<input className="form-control" name="dealershipName" value={this.state.dealershipName} onChange={this.handleInputChange} />
+										<textarea className="form-control" name="to" value={this.state.to} onChange={this.handleInputChange} ></textarea>
 									</div>
 									<div className="form-group">
 										<label htmlFor="">
-											Contact Address
+											Subject
 										</label>
-										<input className="form-control" name="contact" value={this.state.contact} onChange={this.handleInputChange} />
+										<textarea className="form-control" name="subject" value={this.state.subject} onChange={this.handleInputChange} ></textarea>
 									</div>
 									<div className="form-group">
 										<label htmlFor="">
-											Phone No
+											Body
 										</label>
-										<input className="form-control" name="phone" value={this.state.phone} onChange={this.handleInputChange} />
-									</div>
-									<div className="form-group">
-										<label htmlFor="">
-											State
-										</label>
-										<select className="form-control" value={this.state.stateId} onChange={this.handleInputChange} name="stateId">
-										  <option disabled value="">Select a state</option>
-										  {this.state.receivedStates.map((item,index)=><option value={item.Id} key={++index}>{item.Name}</option>)}
-										  
-										</select>
+										<textarea className="form-control" name="body" value={this.state.body} rows="7" onChange={this.handleInputChange} ></textarea>
 									</div>
 									<div className="form-actions mt-10">
 										<button type="button" className="btn btn-success  mr-10" onClick={this.submit}> Submit</button>
@@ -91,4 +80,4 @@ class CreateAgents extends Component{
 	}
 }
 
-export default CreateAgents;
+export default CreateMessages;

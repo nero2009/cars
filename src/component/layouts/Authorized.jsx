@@ -8,7 +8,13 @@ import Login from '../login/Login.jsx';
 import SideNav from '../sidenav/SideNav.jsx';
 import CreateCarStand from '../carstand/CreateCarStand.jsx'
 import CreateAgents from '../Agents/CreateAgents.jsx'
+import CreateMessage from '../message/CreateMessage.jsx'
+import ViewMessage from '../message/ViewMessage.jsx'
 import ViewAgents from '../Agents/ViewAgents.jsx'
+import CreateSales from '../sales/CreateSales.jsx'
+import ViewSales from '../sales/ViewSales.jsx'
+import CreateVehicles from '../vehicles/CreateVehicles.jsx'
+import ViewVehicles from '../vehicles/ViewVehicles.jsx'
 import {Link,Route,Switch,Redirect} from 'react-router-dom';
  
 
@@ -40,6 +46,12 @@ class Authorized extends Component{
 				        <Route path={`${this.props.match.path}/create-car-stand`}  render={(props)=>(<CreateCarStand {...props} {...this.props}/>)}/>
 				        <Route path={`${this.props.match.path}/create-agents`} render={(props)=>(<CreateAgents {...props} {...this.props}/>)}/>
 				        <Route path={`${this.props.match.path}/view-agents`} render={(props)=>(<ViewAgents {...props} {...this.props}/>)}/>
+				        <Route path={`${this.props.match.path}/create-message`} render={(props)=>(<CreateMessage {...props} {...this.props}/>)}/>
+				        <Route path={`${this.props.match.path}/view-message`} render={(props)=>(<ViewMessage {...props} {...this.props}/>)}/>
+				        <Route path={`${this.props.match.path}/create-sales`} render={(props)=>(<CreateSales {...props} {...this.props}/>)}/>
+				        <Route path={`${this.props.match.path}/view-sales`} render={(props)=>(<ViewSales {...props} {...this.props}/>)}/>
+				        <Route path={`${this.props.match.path}/create-vehicles`}  render={(props)=>(<CreateVehicles {...props} {...this.props}/>)}/>
+				        <Route path={`${this.props.match.path}/view-vehicles`}  render={(props)=>(<ViewVehicles {...props} {...this.props}/>)}/>
 				        <Redirect to="/" />
 				     </Switch>
 					</div>
