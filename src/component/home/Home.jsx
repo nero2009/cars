@@ -23,7 +23,7 @@ class Home extends Component{
 					</div>
 					<div class="panel-wrapper collapse in">
 						<div class="panel-body row pa-0">
-							<Table/>
+							
 							<Formy/>
 						</div>
 					</div>

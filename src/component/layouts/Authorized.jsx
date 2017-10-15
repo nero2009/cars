@@ -18,6 +18,39 @@ import CreateVehicles from '../vehicles/CreateVehicles.jsx'
 import ViewVehicles from '../vehicles/ViewVehicles.jsx'
 import {Link,Route,Switch,Redirect} from 'react-router-dom';
  
+const routeMap= path=>{
+	const obj ={
+		['/home/create-car-stand']:'Create car stand'
+	}
+	console.log(path,obj[path])
+	return obj[path];
+}
+const Breadcrumbs = (props) => (
+    <div className="">
+        <ol className="breadcrumb">
+            <Route path='/:path' component={BreadcrumbsItem} />
+        </ol>
+    </div>
+)
+
+const BreadcrumbsItem = ({ ...rest, match }) => (
+    <span>
+        <li className={match.isExact ? 'active bc-link' : ""}>
+        {
+        	match.isExact && 
+               <span> {routeMap(match.url) ||  match.url.split('/').pop()}</span>
+           
+
+        }
+           {
+           	! match.isExact && <Link to={match.url || ''}>
+               <span> {routeMap(match.url) ||  match.url.split('/').pop()}</span>
+            </Link>
+           } 
+        </li>
+        <Route path={`${match.url}/:path`} component={BreadcrumbsItem} />
+    </span>
+)
 
 
 class Authorized extends Component{
@@ -37,6 +70,14 @@ class Authorized extends Component{
 				<Nav/>
 				<SideNav/>
 				<main className="page-wrapper" style={{minHeight:window.innerHeight}}>
+				<div className="row heading-bg">
+					<div className="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+					  <h4 className="txt-dark">{routeMap(this.props.location.pathname)}</h4>
+					</div>
+					<div className="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+					  <Breadcrumbs/>
+					</div>
+				</div>
             <div className="container-fluid pt-25">
 				<div className="row">
 					<div className="col-md-12">

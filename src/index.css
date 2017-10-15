@@ -8726,6 +8726,27 @@ ul.inbox-nav li a:hover, ul.inbox-nav li.active a, ul.inbox-nav li a:focus {
 .swal-overlay {
     overflow-y: unset !important;
   }
+
+ .breadcrumb li {
+    display: inline-block;
+} 
+.bc-link::before {
+    color: #212121;
+    opacity: .5;
+    font-family: FontAwesome;
+    content: "\F105";
+    padding: 0 9px;
+}
+.bc-link:before {
+    padding: 0 5px;
+    color: #ccc;
+    content: "/\A0";
+}
+
+
+.breadcrumb .active span {
+    color: #000 !important;
+}
 @media (max-width: 991px) {
   .dataTables_wrapper .dataTables_length {
     display: none;
