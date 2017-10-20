@@ -22,7 +22,7 @@ const routeMap= path=>{
 	const obj ={
 		['/home/create-car-stand']:'Create car stand'
 	}
-	console.log(path,obj[path])
+	
 	return obj[path];
 }
 const Breadcrumbs = (props) => (

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {failedRequest,startRequest,successRequest} from '../../CommonFunc'
+import {failedRequest,startRequest,successRequest,validatorAll,validator} from '../../CommonFunc'
 import swal from 'sweetalert';
 
 
@@ -12,7 +12,7 @@ const ShellHoc = (Comp)=>{
 		render(){
 			const LoaderButton=<span><i className="fa fa-circle-o-notch fa-spin"></i> Loading</span>;
 			return (
-				<Comp {...this.props} swal={swal} LoaderButton={LoaderButton} submitBtn={`Submit`} failedRequest={failedRequest} startRequest={startRequest} successRequest={successRequest}/>
+				<Comp {...this.props} swal={swal}  LoaderButton={LoaderButton} submitBtn={`Submit`} validator={validator} validatorAll={validatorAll} failedRequest={failedRequest} startRequest={startRequest} successRequest={successRequest}/>
 				)
 		}
 	}
