@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 
-class CreateAgents extends Component{
+class EditAgents extends Component{
 	constructor(props) {
 		super(props);
 		this.handleInputChange=this.handleInputChange.bind(this);
 		this.submit=this.submit.bind(this);
 		this.clear=this.clear.bind(this);
-		this.state={name:'',dealershipName:'',contact:'',phone:'', stateId:'',receivedStates:[] }
+		this.state={name:'',dealershipName:'',contact:'',phone:'', stateId:'',receivedStates:[],submitBtn:this.props.submitBtn,disabled:false}
 	}
 
 	componentDidMount() {
-		
+		const recievedData={name:'foo foo',dealershipName:'Goody',contact:'Yaba',phone:'345930', stateId:1};
+		this.setState({recievedData,name:recievedData.name,stateId:recievedData.stateId,dealershipName:recievedData.dealershipName,contact:recievedData.contact
+		,phone:recievedData.phone});
 	}
 
 	handleInputChange(e){
@@ -19,13 +21,16 @@ class CreateAgents extends Component{
 	}
 
 	clear(){
-		this.setState({name:'',dealershipName:'',contact:'',phone:'',stateId:''})
+		this.setState({name:this.state.recievedData.name,dealershipName:this.state.recievedData.dealershipName,
+			contact:this.state.recievedData,contact,phone:this.state.recievedData.phone,stateId:this.state.recievedData.stateId})
 	}
 
 	submit(){
+		this.props.startRequest.call(this);
 		const {name,dealershipName,contact,phone,stateId} = this.state;
 		const data ={name,dealershipName,contact,phone,stateId}
 		alert(data)
+		this.props.failedRequest.call(this,"Agents not created.");
 	}
 
 
@@ -42,24 +47,19 @@ class CreateAgents extends Component{
 							<div className="panel-body">
 								<form >
 									<div className="form-group">
-
 										<label htmlFor="">
-											Name
-										</label>
-										<input className="form-control" name="name" value={this.state.name} onChange={this.handleInputChange} />
-									</div>
-									<div className="form-group">
-										<label htmlFor="">
-											DealershipName
+											Dealership Name
 										</label>
 										<input className="form-control" name="dealershipName" value={this.state.dealershipName} onChange={this.handleInputChange} />
 									</div>
 									<div className="form-group">
 										<label htmlFor="">
-											Contact Address
+											Contact Name
 										</label>
 										<input className="form-control" name="contact" value={this.state.contact} onChange={this.handleInputChange} />
 									</div>
+									
+									
 									<div className="form-group">
 										<label htmlFor="">
 											Phone No
@@ -76,9 +76,10 @@ class CreateAgents extends Component{
 										  
 										</select>
 									</div>
+									
 									<div className="form-actions mt-10">
-										<button type="button" className="btn btn-success  mr-10" onClick={this.submit}> Submit</button>
-										<button type="button" className="btn btn-default" onClick={this.clear}>Cancel</button>
+										<button type="button" className="btn btn-success  mr-10" disabled={this.state.disabled} onClick={this.submit}> {this.state.submitBtn}</button>
+										<button type="button" className="btn btn-default" disabled={this.state.disabled} onClick={this.clear}>Cancel</button>
 									</div>
 								</form>
 							</div>
@@ -91,4 +92,4 @@ class CreateAgents extends Component{
 	}
 }
 
-export default CreateAgents;
+export default EditAgents;

@@ -10,8 +10,8 @@ class ViewSales extends Component{
 
 	componentDidMount() {
 		this.setState({
-			header:['#','Cost','Amount Paid','balance'],
-			rows:[{no:1,cost:0.00,amountPaid:0.00,balance:0.00}]
+			header:['#','Cost','Amount Paid','balance',<i className="fa fa-gear"></i>],
+			rows:[{no:1,cost:0.00,amountPaid:0.00,balance:0.00,action:<Link to="#"><i className="fa fa-pencil"></i></Link>}]
 		})
 	}
 

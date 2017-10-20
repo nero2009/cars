@@ -10,8 +10,8 @@ class ViewVehicles extends Component{
 
 	componentDidMount() {
 		this.setState({
-			header:['#','vin','manufacturer','model','modelYear','color','bodyType','registered','regNo'],
-			rows:[{no:1,vin:'',manufacturer:'',model:'',modelYear:'',color:'',bodyType:'',registered:'',regNo:''}]
+			header:['#','vin','manufacturer','model','modelYear','color','bodyType','registered','regNo',<i className="fa fa-gear"></i>],
+			rows:[{no:1,vin:'',manufacturer:'',model:'',modelYear:'',color:'',bodyType:'',registered:'',regNo:'',action:<Link to="#"><i className="fa fa-pencil"></i></Link>}]
 		})
 	}
 
