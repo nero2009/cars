@@ -7,7 +7,8 @@ class CreateMessages extends Component{
 		this.handleInputChange=this.handleInputChange.bind(this);
 		this.submit=this.submit.bind(this);
 		this.clear=this.clear.bind(this);
-		this.state={to:'',from:'',subject:'', body:'' }
+		this.state={to:'',from:'',subject:'', body:'',submitBtn:this.props.submitBtn,
+		err:{to:'',from:'',subject:'', body:'',general:'',all:new Set()},disabled:false }
 		
 	}
 
@@ -17,6 +18,8 @@ class CreateMessages extends Component{
 
 	handleInputChange(e){
 		this.setState({[e.target.name]:e.target.value})
+		this.props.validator({name:e.target.id,value:e.target.value},'Message',this);
+        return;
 	}
 
 	clear(){
@@ -24,9 +27,16 @@ class CreateMessages extends Component{
 	}
 
 	submit(){
+		this.props.validatorAll([{name:'to',value:this.state.to},{name:'from',value:this.state.from},{name:"subject",value:this.state.subject},
+			{name:"body",value:this.state.body}],'car stand',this);
+        if (this.state.err.all.size > 0) {
+            // this.setState({sending:false,disabled:false})
+            return;
+        }
+        this.props.startRequest.call(this);
 		const {to,from,subject,body} = this.state;
 		const data ={to,from,subject,body}
-		alert(data)
+		this.props.failedRequest.call(this,"Car stand not created.");
 	}
 
 
@@ -41,32 +51,36 @@ class CreateMessages extends Component{
 						<div className="panel-wrapper collapse in">
 							<div className="panel-body">
 								<form >
-									<div className="form-group">
-										<label htmlFor="">
+									<div className={this.state.err.from.length > 0?"has-error form-group":"form-group"}>
+										<label htmlFor="" className="control-label">
 											From
 										</label>
-										<textarea className="form-control" name="from" value={this.state.from} onChange={this.handleInputChange} ></textarea>
+										<textarea className="form-control" id="from" name="from" value={this.state.from} onChange={this.handleInputChange} ></textarea>
+										<span className="error-text">{this.state.err.from}</span>
 									</div>
-									<div className="form-group">
-										<label htmlFor="">
+									<div className={this.state.err.to.length > 0?"has-error form-group":"form-group"}>
+										<label htmlFor="" className="control-label">
 											To
 										</label>
-										<textarea className="form-control" name="to" value={this.state.to} onChange={this.handleInputChange} ></textarea>
+										<textarea className="form-control" id="to" name="to" value={this.state.to} onChange={this.handleInputChange} ></textarea>
+										<span className="error-text">{this.state.err.to}</span>
 									</div>
-									<div className="form-group">
-										<label htmlFor="">
+									<div className={this.state.err.subject.length > 0?"has-error form-group":"form-group"}>
+										<label htmlFor="" className="control-label">
 											Subject
 										</label>
-										<textarea className="form-control" name="subject" value={this.state.subject} onChange={this.handleInputChange} ></textarea>
+										<textarea className="form-control" id="subject" name="subject" value={this.state.subject} onChange={this.handleInputChange} ></textarea>
+										<span className="error-text">{this.state.err.subject}</span>
 									</div>
-									<div className="form-group">
-										<label htmlFor="">
+									<div className={this.state.err.body.length > 0?"has-error form-group":"form-group"}>
+										<label htmlFor="" className="control-label">
 											Body
 										</label>
-										<textarea className="form-control" name="body" value={this.state.body} rows="7" onChange={this.handleInputChange} ></textarea>
+										<textarea className="form-control" id="body" name="body" value={this.state.body} rows="7" onChange={this.handleInputChange} ></textarea>
+										<span className="error-text">{this.state.err.body}</span>
 									</div>
 									<div className="form-actions mt-10">
-										<button type="button" className="btn btn-success  mr-10" onClick={this.submit}> Submit</button>
+										<button type="button" className="btn btn-success  mr-10" disabled={this.state.disabled || this.state.err.all.size > 0} onClick={this.submit}> Submit</button>
 										<button type="button" className="btn btn-default" onClick={this.clear}>Cancel</button>
 									</div>
 								</form>

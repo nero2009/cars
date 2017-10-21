@@ -7,7 +7,8 @@ class CreateSales extends Component{
 		this.handleInputChange=this.handleInputChange.bind(this);
 		this.submit=this.submit.bind(this);
 		this.clear=this.clear.bind(this);
-		this.state={cost:'',amount:'',balance:''}
+		this.state={cost:'',amount:'',balance:'',submitBtn:this.props.submitBtn,
+		err:{cost:'',amount:'',balance:'',general:'',all:new Set()},disabled:false}
 		
 	}
 
@@ -17,6 +18,8 @@ class CreateSales extends Component{
 
 	handleInputChange(e){
 		this.setState({[e.target.name]:e.target.value})
+		this.props.validator({name:e.target.id,value:e.target.value},'Sales',this);
+        return;
 	}
 
 	clear(){
@@ -24,9 +27,15 @@ class CreateSales extends Component{
 	}
 
 	submit(){
+		this.props.validatorAll([{name:'cost',value:this.state.cost},{name:'amount',value:this.state.amount},{name:"balance",value:this.state.balance}],'car stand',this);
+        if (this.state.err.all.size > 0) {
+            // this.setState({sending:false,disabled:false})
+            return;
+        }
+        this.props.startRequest.call(this);	
 		const {cost,amount,balance} = this.state;
 		const data ={cost,amount,balance}
-		alert(data)
+		this.props.failedRequest.call(this,"User not created.");
 	}
 
 
@@ -41,27 +50,30 @@ class CreateSales extends Component{
 						<div className="panel-wrapper collapse in">
 							<div className="panel-body">
 								<form >
-									<div className="form-group">
-										<label htmlFor="">
+									<div className={this.state.err.cost.length > 0?"has-error form-group":"form-group"}>
+										<label htmlFor="" className="control-label">
 											Cost
 										</label>
-										<textarea className="form-control" name="cost" value={this.state.cost} onChange={this.handleInputChange}></textarea>
+										<textarea className="form-control" name="cost" id="cost" value={this.state.cost} onChange={this.handleInputChange}></textarea>
+										<span className="error-text">{this.state.err.cost}</span>
 									</div>
-									<div className="form-group">
-										<label htmlFor="">
+									<div className={this.state.err.amount.length > 0?"has-error form-group":"form-group"}>
+										<label htmlFor="" className="control-label">
 											Amount
 										</label>
-										<textarea className="form-control" name="amount" value={this.state.amount} onChange={this.handleInputChange}></textarea>
+										<textarea className="form-control" name="amount" id="amount" value={this.state.amount} onChange={this.handleInputChange}></textarea>
+										<span className="error-text">{this.state.err.amount}</span>
 									</div>
-									<div className="form-group">
-										<label htmlFor="">
+									<div className={this.state.err.balance.length > 0?"has-error form-group":"form-group"}>
+										<label htmlFor="" className="control-label">
 											Balance
 										</label>
-										<textarea className="form-control" name="balance" value={this.state.balance} onChange={this.handleInputChange}></textarea>
+										<textarea className="form-control" name="balance" id="balance" value={this.state.balance} onChange={this.handleInputChange}></textarea>
+										<span className="error-text">{this.state.err.balance}</span>
 									</div>
 									
 									<div className="form-actions mt-10">
-										<button type="button" className="btn btn-success  mr-10" onClick={this.submit}> Submit</button>
+										<button type="button" className="btn btn-success  mr-10" onClick={this.submit} disabled={this.state.disabled || this.state.err.all.size > 0} > Submit</button>
 										<button type="button" className="btn btn-default" onClick={this.clear}>Cancel</button>
 									</div>
 								</form>
