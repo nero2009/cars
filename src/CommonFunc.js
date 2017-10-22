@@ -203,6 +203,24 @@ export const validationRules={
 	permissionName:['required'],
 	userScope:['required'],
 	username:['string'],
+	manufacturer:['required','max:50','string'],
+	model:['required'],
+	modelYear:['required','number','max:4'],
+	color:['required','string'],
+	bodyType:['string'],
+	registered:['required'],
+	regNo:['number','max:50'],
+	vin:['number','required'],
+	dealershipName:['required','string'],
+	to:['required','string'],
+	from:['string'],
+	subject:['string'],
+	body:['string'],
+	cost:['required','number'],
+	amount:['required','number'],
+	balance:['required','number'],
+
+
 }
 
 export const getErrorMsg=(error,name,controller=null)=>{

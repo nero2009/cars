@@ -9,12 +9,15 @@ import SideNav from '../sidenav/SideNav.jsx';
 import CreateCarStand from '../carstand/CreateCarStand.jsx'
 import EditCarStand from '../carstand/EditCarStand.jsx'
 import CreateAgents from '../Agents/CreateAgents.jsx'
+import EditAgents from '../Agents/EditAgents.jsx'
 import CreateMessage from '../message/CreateMessage.jsx'
 import ViewMessage from '../message/ViewMessage.jsx'
 import ViewAgents from '../Agents/ViewAgents.jsx'
 import CreateSales from '../sales/CreateSales.jsx'
+import EditSales from '../sales/EditSales.jsx'
 import ViewSales from '../sales/ViewSales.jsx'
 import CreateVehicles from '../vehicles/CreateVehicles.jsx'
+import EditVehicles from '../vehicles/EditVehicles.jsx'
 import ViewVehicles from '../vehicles/ViewVehicles.jsx'
 import EditVehicles from '../vehicles/EditVehicles.jsx'
 import {Link,Route,Switch,Redirect} from 'react-router-dom';
@@ -89,12 +92,15 @@ class Authorized extends Component{
 				        <Route path={`${this.props.match.path}/create-car-stand`}  render={(props)=>(<CreateCarStand {...props} {...this.props}/>)}/>
 				        <Route path={`${this.props.match.path}/edit-car-stand/:id`}  render={(props)=>(<EditCarStand {...props} {...this.props}/>)}/>
 				        <Route path={`${this.props.match.path}/create-agents`} render={(props)=>(<CreateAgents {...props} {...this.props}/>)}/>
+				        <Route path={`${this.props.match.path}/edit-agents/:id`} render={(props)=>(<EditAgents {...props} {...this.props}/>)}/>
 				        <Route path={`${this.props.match.path}/view-agents`} render={(props)=>(<ViewAgents {...props} {...this.props}/>)}/>
 				        <Route path={`${this.props.match.path}/create-message`} render={(props)=>(<CreateMessage {...props} {...this.props}/>)}/>
 				        <Route path={`${this.props.match.path}/view-message`} render={(props)=>(<ViewMessage {...props} {...this.props}/>)}/>
 				        <Route path={`${this.props.match.path}/create-sales`} render={(props)=>(<CreateSales {...props} {...this.props}/>)}/>
+				        <Route path={`${this.props.match.path}/edit-sales/:id`} render={(props)=>(<EditSales {...props} {...this.props}/>)}/>
 				        <Route path={`${this.props.match.path}/view-sales`} render={(props)=>(<ViewSales {...props} {...this.props}/>)}/>
 				        <Route path={`${this.props.match.path}/create-vehicles`}  render={(props)=>(<CreateVehicles {...props} {...this.props}/>)}/>
+				        <Route path={`${this.props.match.path}/edit-vehicles/:id`}  render={(props)=>(<EditVehicles {...props} {...this.props}/>)}/>
 				        <Route path={`${this.props.match.path}/view-vehicles`}  render={(props)=>(<ViewVehicles {...props} {...this.props}/>)}/>
 				        <Route path={`${this.props.match.path}/edit-vehicle/:id`}  render={(props)=>(<EditVehicles {...props} {...this.props}/>)}/>
 				        <Redirect to="/" />
