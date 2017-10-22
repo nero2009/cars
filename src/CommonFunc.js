@@ -232,6 +232,20 @@ export const getErrorMsg=(error,name,controller=null)=>{
 	if (name ==='contactName') {
 		name='contact name'
 	}
+	if (name ==='state') {
+		a='a'
+		controller='';
+	}
+	if (name ==='phone') {
+		a='a'
+		controller='';
+		name='phone number'
+	}
+	if (name ==='dealershipName') {
+		a='a'
+		controller='';
+		name='dealership name'
+	}
 
 	if (error === 'required') {
 		return `Please provide ${a} ${controller} ${name}`;

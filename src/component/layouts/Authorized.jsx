@@ -17,7 +17,6 @@ import CreateSales from '../sales/CreateSales.jsx'
 import EditSales from '../sales/EditSales.jsx'
 import ViewSales from '../sales/ViewSales.jsx'
 import CreateVehicles from '../vehicles/CreateVehicles.jsx'
-import EditVehicles from '../vehicles/EditVehicles.jsx'
 import ViewVehicles from '../vehicles/ViewVehicles.jsx'
 import EditVehicles from '../vehicles/EditVehicles.jsx'
 import {Link,Route,Switch,Redirect} from 'react-router-dom';

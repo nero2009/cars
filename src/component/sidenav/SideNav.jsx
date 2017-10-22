@@ -58,11 +58,29 @@ class SideNav extends Component{
 					</ul>
 				</li>
 				<li>
-					<a href="#"><div className="pull-left"><i className="zmdi zmdi-shopping-cart mr-20"></i><span className="right-nav-text">Sales</span></div><div className="pull-right"><span className="label label-success">3</span></div><div className="clearfix"></div></a>
+					<a href="javascript:void(0);" data-toggle="collapse" data-target="#sales_dr"><div className="pull-left"><i className="zmdi zmdi-shopping-cart mr-20"></i><span className="right-nav-text">Sales</span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
+					<ul id="sales_dr" className="collapse collapse-level-1">
+						<li>
+							<Link  to="/home/view-sales">View all sales</Link>
+						</li>
+						<li>
+							<Link  to="/home/create-sales">Add New</Link>
+						</li>
+					</ul>
 				</li>
 				<li>
-					<a href="#"><div className="pull-left"><i className="zmdi zmdi-email mr-20"></i><span className="right-nav-text">Message(s)</span></div><div className="pull-right"><span className="label label-warning">8</span></div><div className="clearfix"></div></a>
+					<a href="javascript:void(0);" data-toggle="collapse" data-target="#message_dr"><div className="pull-left"><i className="zmdi zmdi-email mr-20"></i><span className="right-nav-text">Message(s)</span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
+					<ul id="message_dr" className="collapse collapse-level-1">
+						<li>
+							<Link  to="/home/view-message">View all messages</Link>
+						</li>
+						<li>
+							<Link  to="/home/create-message">Create message</Link>
+						</li>
+					</ul>
 				</li>
+				
+				
 				<li><hr className="light-grey-hr mb-10"/></li>
 				<li className="navigation-header">
 					<span>Security and Settings</span> 
