@@ -19,6 +19,7 @@ import ViewSales from '../sales/ViewSales.jsx'
 import CreateVehicles from '../vehicles/CreateVehicles.jsx'
 import ViewVehicles from '../vehicles/ViewVehicles.jsx'
 import EditVehicles from '../vehicles/EditVehicles.jsx'
+import DashboardIndex from '../dashboard/DashboardIndex.jsx'
 import {Link,Route,Switch,Redirect} from 'react-router-dom';
  
 const routeMap= path=>{
@@ -102,6 +103,7 @@ class Authorized extends Component{
 				        <Route path={`${this.props.match.path}/edit-vehicles/:id`}  render={(props)=>(<EditVehicles {...props} {...this.props}/>)}/>
 				        <Route path={`${this.props.match.path}/view-vehicles`}  render={(props)=>(<ViewVehicles {...props} {...this.props}/>)}/>
 				        <Route path={`${this.props.match.path}/edit-vehicle/:id`}  render={(props)=>(<EditVehicles {...props} {...this.props}/>)}/>
+				        <Route path={`${this.props.match.path}/dashboard`}  render={(props)=>(<DashboardIndex {...props} {...this.props}/>)}/>
 				        <Redirect to="/" />
 				     </Switch>
 					</div>
