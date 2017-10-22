@@ -29,7 +29,7 @@ class EditSales extends Component{
 	}
 
 	submit(){
-		this.props.validatorAll([{name:'cost',value:this.state.cost},{name:'amount',value:this.state.amount},{name:"balance",value:this.state.balance}],'car stand',this);
+		this.props.validatorAll([{name:'cost',value:this.state.cost},{name:'amount',value:this.state.amount},{name:"balance",value:this.state.balance}],'Sales',this);
         if (this.state.err.all.size > 0) {
             // this.setState({sending:false,disabled:false})
             return;
@@ -37,7 +37,7 @@ class EditSales extends Component{
         this.props.startRequest.call(this);	
 		const {cost,amount,balance} = this.state;
 		const data ={cost,amount,balance}
-		this.props.failedRequest.call(this,"User not created.");
+		this.props.failedRequest.call(this,"Sales not created.");
 	}
 
 
@@ -56,21 +56,21 @@ class EditSales extends Component{
 										<label htmlFor="" className="control-label">
 											Cost
 										</label>
-										<textarea className="form-control" name="cost" id="cost" value={this.state.cost} onChange={this.handleInputChange}></textarea>
+										<input className="form-control" name="cost" id="cost" value={this.state.cost} onChange={this.handleInputChange}/>
 										<span className="error-text">{this.state.err.cost}</span>
 									</div>
 									<div className={this.state.err.amount.length > 0?"has-error form-group":"form-group"}>
 										<label htmlFor="" className="control-label">
 											Amount
 										</label>
-										<textarea className="form-control" name="amount" id="amount" value={this.state.amount} onChange={this.handleInputChange}></textarea>
+										<input className="form-control" name="amount" id="amount" value={this.state.amount} onChange={this.handleInputChange}/>
 										<span className="error-text">{this.state.err.amount}</span>
 									</div>
 									<div className={this.state.err.balance.length > 0?"has-error form-group":"form-group"}>
 										<label htmlFor="" className="control-label">
 											Balance
 										</label>
-										<textarea className="form-control" name="balance" id="balance" value={this.state.balance} onChange={this.handleInputChange}></textarea>
+										<input className="form-control" name="balance" id="balance" value={this.state.balance} onChange={this.handleInputChange}/>
 										<span className="error-text">{this.state.err.balance}</span>
 									</div>
 									

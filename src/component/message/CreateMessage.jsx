@@ -28,7 +28,7 @@ class CreateMessages extends Component{
 
 	submit(){
 		this.props.validatorAll([{name:'to',value:this.state.to},{name:'from',value:this.state.from},{name:"subject",value:this.state.subject},
-			{name:"body",value:this.state.body}],'car stand',this);
+			{name:"body",value:this.state.body}],'Message',this);
         if (this.state.err.all.size > 0) {
             // this.setState({sending:false,disabled:false})
             return;
@@ -36,7 +36,7 @@ class CreateMessages extends Component{
         this.props.startRequest.call(this);
 		const {to,from,subject,body} = this.state;
 		const data ={to,from,subject,body}
-		this.props.failedRequest.call(this,"Car stand not created.");
+		this.props.failedRequest.call(this,"Message not created.");
 	}
 
 
@@ -55,28 +55,28 @@ class CreateMessages extends Component{
 										<label htmlFor="" className="control-label">
 											From
 										</label>
-										<textarea className="form-control" id="from" name="from" value={this.state.from} onChange={this.handleInputChange} ></textarea>
+										<input className="form-control" id="from" name="from" value={this.state.from} onChange={this.handleInputChange} />
 										<span className="error-text">{this.state.err.from}</span>
 									</div>
 									<div className={this.state.err.to.length > 0?"has-error form-group":"form-group"}>
 										<label htmlFor="" className="control-label">
 											To
 										</label>
-										<textarea className="form-control" id="to" name="to" value={this.state.to} onChange={this.handleInputChange} ></textarea>
+										<input className="form-control" id="to" name="to" value={this.state.to} onChange={this.handleInputChange} />
 										<span className="error-text">{this.state.err.to}</span>
 									</div>
 									<div className={this.state.err.subject.length > 0?"has-error form-group":"form-group"}>
 										<label htmlFor="" className="control-label">
 											Subject
 										</label>
-										<textarea className="form-control" id="subject" name="subject" value={this.state.subject} onChange={this.handleInputChange} ></textarea>
+										<input className="form-control" id="subject" name="subject" value={this.state.subject} onChange={this.handleInputChange} />
 										<span className="error-text">{this.state.err.subject}</span>
 									</div>
 									<div className={this.state.err.body.length > 0?"has-error form-group":"form-group"}>
 										<label htmlFor="" className="control-label">
 											Body
 										</label>
-										<textarea className="form-control" id="body" name="body" value={this.state.body} rows="7" onChange={this.handleInputChange} ></textarea>
+										<input className="form-control" id="body" name="body" value={this.state.body} rows="7" onChange={this.handleInputChange} />
 										<span className="error-text">{this.state.err.body}</span>
 									</div>
 									<div className="form-actions mt-10">

@@ -27,7 +27,7 @@ class CreateAgents extends Component{
 
 	submit(){
 		this.props.validatorAll([{name:'dealershipName',value:this.state.dealershipName},
-			{name:'contact',value:this.state.contactName},{name:"state",value:this.state.stateId},{name:"phone",value:this.state.phone}],
+			{name:'contactName',value:this.state.contactName},{name:"state",value:this.state.stateId},{name:"phone",value:this.state.phone}],
 			'agents',this);
 		if (this.state.err.all.size > 0) {
             // this.setState({sending:false,disabled:false})

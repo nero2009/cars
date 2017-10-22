@@ -207,9 +207,9 @@ export const validationRules={
 	model:['required'],
 	modelYear:['required','number','max:4'],
 	color:['required','string'],
-	bodyType:['string'],
+	bodyType:['string','required'],
 	registered:['required'],
-	regNo:['number','max:50'],
+	regNo:['required','string'],
 	vin:['number','required'],
 	dealershipName:['required','string'],
 	to:['required','string'],
@@ -278,4 +278,8 @@ export const getErrorMsg=(error,name,controller=null)=>{
 	if (error === 'match') {
 		return `confirm password does not match password`;
 	}
+	if (error === 'registered') {
+		return `Please provide a registration status`;
+	}
+
 }
