@@ -82,7 +82,7 @@ class Authorized extends Component{
 					  <Breadcrumbs/>
 					</div>
 				</div>
-            <div className="container-fluid pt-25">
+            <div className="container-fluid ">
 				<div className="row">
 					<div className="col-md-12">
 						<Switch>

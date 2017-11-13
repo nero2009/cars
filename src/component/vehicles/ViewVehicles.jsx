@@ -11,7 +11,7 @@ class ViewVehicles extends Component{
 	componentDidMount() {
 		this.setState({
 			header:['#','vin','manufacturer','model','modelYear','color','bodyType','registered','regNo',<i className="fa fa-gear"></i>],
-			rows:[{no:1,vin:'',manufacturer:'',model:'',modelYear:'',color:'',bodyType:'',registered:'',regNo:'',action:<Link to="#"><i className="fa fa-pencil"></i></Link>}]
+			rows:[{no:1,vin:'drt455HQ',manufacturer:'Ford',model:'Ranger',modelYear:'2017',color:'black',bodyType:'muscle',registered:'yes',regNo:'10092hq',action:<Link to="#"><i className="fa fa-pencil"></i></Link>}]
 		})
 	}
 

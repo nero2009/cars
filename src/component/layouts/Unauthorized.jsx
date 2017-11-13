@@ -84,7 +84,7 @@ class Unauthorized extends Component{
 		        </div>
 		        <div className="main-container">
 		            <section className="height-100 imagebg text-center" data-overlay="4">
-		                <div className="background-image-holder">
+		                <div className="background-image-holder" style={{backgroundImage:`url(${BG})`,opacity:1}}>
 		                    <img alt="background" src={BG} />
 		                </div>
 		                <div className="container pos-vertical-center">
@@ -103,7 +103,7 @@ class Unauthorized extends Component{
 		                                    Login with Google
 		                                </span>
 		                            </a>
-		                            
+		                            <hr/>
 		                            <p>Login using your CarFacts account</p>
 		                            <form className="form-email" action="login.php" method="POST" data-success="Authenticating Your Credentials" data-error="Please provide your email address and password.">
 		                                <div className="row">
