@@ -5,17 +5,57 @@ import logoDark from '../../media/logo-dark.png'
 import logoLight from '../../media/logo-light.png'
 import BG from '../../media/inner.jpg'
 
+import {failedRequest,startRequest,successRequest,validatorAll,validator} from '../../CommonFunc'
 
 class Unauthorized extends Component{
 
 	constructor(props){
 			super(props);
+			this.state = {
+				email:'',password:'',submitButton:'Login',isSuccessful:false,failed:false,err:{email:'',password:'',all: new Set(), disabled:false}
+			}
+			this.handleInputChange = this.handleInputChange.bind(this)
+			this.submit = this.submit.bind(this)
+			this.nero='nero'
 	}
 	componentDidMount(){
 		
 	}
 
+	handleInputChange(e){
+		this.setState({[e.target.name]:e.target.value})
+		validator({name:e.target.id,value:e.target.value},'Login',this);
+        return;
+	}
+
+	submit(e){
+		validatorAll([{name:'email',value:this.state.email},
+			{name:'password',value:this.state.password}],'Login',this);
+		if (this.state.err.all.size > 0) {
+            // this.setState({sending:false,disabled:false})
+            return;
+        }
+        this.setState({submitButton: '...Sending'});
+
+		// startRequest.call(this);
+		// const {email,password} = this.state;
+		// const data ={email,password}
+		// Axios.put(url,data).then((function(res){
+		// 	this.setState({submitButton: 'Login Success',isSuccessful:true});			
+			
+		// 	alert(res.data);
+		// }).bind(this)).catch((err)=>{
+		// 	this.setState({submitButtonText: 'Login',isSuccessful:false});
+			
+		// 	alert(err);
+		// })
+		failedRequest.call(this,"Login Unsuccessful");
+	}
+
+
+
 	render(){
+		
 		return (
 			<div>
 			    <div className="nav-container ">
@@ -107,14 +147,16 @@ class Unauthorized extends Component{
 		                            <p>Login using your CarFacts account</p>
 		                            <form className="form-email" action="login.php" method="POST" data-success="Authenticating Your Credentials" data-error="Please provide your email address and password.">
 		                                <div className="row">
-		                                    <div className="col-sm-12">
-		                                        <input type="email" name="email" className="validate-required validate-email" placeholder="Email Address" />
+		                                    <div className={this.state.err.email.length > 0?"has-error col-sm-12":"col-sm-12"}>
+		                                        <input type="email" name="email" id="email" value={this.state.email} className="validate-required validate-email" onChange={this.handleInputChange} placeholder="Email Address" />
+		                                        <span className="error-text">{this.state.err.email}</span>
+		                                    </div>
+		                                    <div className={this.state.err.password.length > 0?"has-error col-sm-12":"col-sm-12"}>
+		                                        <input type="password" name="password" id="password" value={this.state.password} className="validate-required" placeholder="Password" onChange={this.handleInputChange} />
+		                                        <span className="error-text">{this.state.err.password}</span>
 		                                    </div>
 		                                    <div className="col-sm-12">
-		                                        <input type="password" className="validate-required" placeholder="Password" />
-		                                    </div>
-		                                    <div className="col-sm-12">
-		                                        <button className="btn btn--primary type--uppercase" type="submit">Login</button>
+		                                        <button className="btn btn--primary "  type="submit" onClick={this.submit} disabled={this.state.disabled || this.state.err.all.size > 0}>{this.state.submitButton}</button>
 		                                    </div>
 		                                </div>
 		                                
