@@ -20,7 +20,10 @@ import CreateVehicles from '../vehicles/CreateVehicles.jsx'
 import ViewVehicles from '../vehicles/ViewVehicles.jsx'
 import EditVehicles from '../vehicles/EditVehicles.jsx'
 import DashboardIndex from '../dashboard/DashboardIndex.jsx'
-import {Link,Route,Switch,Redirect} from 'react-router-dom';
+import {Link,Route,Switch,Redirect} from 'react-router-dom'
+import localforage from 'localforage'
+import Preloader from '../loaders/Preloader.jsx'
+import {BASEURI,TOKENKEY} from '../../Constants'
  
 const routeMap= path=>{
 	const obj ={
@@ -61,6 +64,21 @@ class Authorized extends Component{
 
 	constructor(props){
 			super(props);
+			this.state={isSignedIn:false}
+	}
+	componentWillMount(){
+		localforage.getItem(TOKENKEY)
+		.then((token)=>{
+			if (token) {
+				this.setState({isSignedIn:true})
+				return;
+			}
+			this.props.history.push('/login')
+			
+		})
+		.catch(err=>{
+
+		})
 	}
 	componentDidMount(){
 		
@@ -69,51 +87,58 @@ class Authorized extends Component{
 	render(){
 		return (
 			<div>
+				{
+					!this.state.isSignedIn && <Preloader/>
+				}
+				{
+					this.state.isSignedIn && 
+					<div className="wrapper theme-1-active pimary-color-red" >
+					<Nav/>
+					<SideNav/>
+					<main className="page-wrapper" style={{minHeight:window.innerHeight}}>
+					<div className="row heading-bg">
+						<div className="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+						  <h4 className="txt-dark">{routeMap(this.props.location.pathname)}</h4>
+						</div>
+						<div className="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+						  <Breadcrumbs/>
+						</div>
+					</div>
+				<div className="container-fluid ">
+					<div className="row">
+						<div className="col-md-12">
+							<Switch>
+							<Route path={this.props.match.path} exact render={(props)=>(<Home {...props} {...this.props}/>)} />
+							 <Route path={`${this.props.match.path}/car-stand`} render={(props)=>(<CarStand {...props} {...this.props}/>)}/>
+							<Route path={`${this.props.match.path}/foo`}  render={(props)=>(<Login {...props} {...this.props}/>)}/>
+							<Route path={`${this.props.match.path}/create-car-stand`}  render={(props)=>(<CreateCarStand {...props} {...this.props}/>)}/>
+							<Route path={`${this.props.match.path}/edit-car-stand/:id`}  render={(props)=>(<EditCarStand {...props} {...this.props}/>)}/>
+							<Route path={`${this.props.match.path}/create-agents`} render={(props)=>(<CreateAgents {...props} {...this.props}/>)}/>
+							<Route path={`${this.props.match.path}/edit-agents/:id`} render={(props)=>(<EditAgents {...props} {...this.props}/>)}/>
+							<Route path={`${this.props.match.path}/view-agents`} render={(props)=>(<ViewAgents {...props} {...this.props}/>)}/>
+							<Route path={`${this.props.match.path}/create-message`} render={(props)=>(<CreateMessage {...props} {...this.props}/>)}/>
+							<Route path={`${this.props.match.path}/view-message`} render={(props)=>(<ViewMessage {...props} {...this.props}/>)}/>
+							<Route path={`${this.props.match.path}/create-sales`} render={(props)=>(<CreateSales {...props} {...this.props}/>)}/>
+							<Route path={`${this.props.match.path}/edit-sales/:id`} render={(props)=>(<EditSales {...props} {...this.props}/>)}/>
+							<Route path={`${this.props.match.path}/view-sales`} render={(props)=>(<ViewSales {...props} {...this.props}/>)}/>
+							<Route path={`${this.props.match.path}/create-vehicles`}  render={(props)=>(<CreateVehicles {...props} {...this.props}/>)}/>
+							<Route path={`${this.props.match.path}/edit-vehicles/:id`}  render={(props)=>(<EditVehicles {...props} {...this.props}/>)}/>
+							<Route path={`${this.props.match.path}/view-vehicles`}  render={(props)=>(<ViewVehicles {...props} {...this.props}/>)}/>
+							<Route path={`${this.props.match.path}/edit-vehicle/:id`}  render={(props)=>(<EditVehicles {...props} {...this.props}/>)}/>
+							<Route path={`${this.props.match.path}/dashboard`}  render={(props)=>(<DashboardIndex {...props} {...this.props}/>)}/>
+							<Redirect to="/" />
+						 </Switch>
+						</div>
+						
+					</div>
+				</div>
+						 <Footer/>
+					</main>
+					  
+				</div>
+				}
 				
-				<div className="wrapper theme-1-active pimary-color-red" >
-				<Nav/>
-				<SideNav/>
-				<main className="page-wrapper" style={{minHeight:window.innerHeight}}>
-				<div className="row heading-bg">
-					<div className="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-					  <h4 className="txt-dark">{routeMap(this.props.location.pathname)}</h4>
-					</div>
-					<div className="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-					  <Breadcrumbs/>
-					</div>
-				</div>
-            <div className="container-fluid ">
-				<div className="row">
-					<div className="col-md-12">
-						<Switch>
-				        <Route path={this.props.match.path} exact render={(props)=>(<Home {...props} {...this.props}/>)} />
-				         <Route path={`${this.props.match.path}/car-stand`} render={(props)=>(<CarStand {...props} {...this.props}/>)}/>
-				        <Route path={`${this.props.match.path}/foo`}  render={(props)=>(<Login {...props} {...this.props}/>)}/>
-				        <Route path={`${this.props.match.path}/create-car-stand`}  render={(props)=>(<CreateCarStand {...props} {...this.props}/>)}/>
-				        <Route path={`${this.props.match.path}/edit-car-stand/:id`}  render={(props)=>(<EditCarStand {...props} {...this.props}/>)}/>
-				        <Route path={`${this.props.match.path}/create-agents`} render={(props)=>(<CreateAgents {...props} {...this.props}/>)}/>
-				        <Route path={`${this.props.match.path}/edit-agents/:id`} render={(props)=>(<EditAgents {...props} {...this.props}/>)}/>
-				        <Route path={`${this.props.match.path}/view-agents`} render={(props)=>(<ViewAgents {...props} {...this.props}/>)}/>
-				        <Route path={`${this.props.match.path}/create-message`} render={(props)=>(<CreateMessage {...props} {...this.props}/>)}/>
-				        <Route path={`${this.props.match.path}/view-message`} render={(props)=>(<ViewMessage {...props} {...this.props}/>)}/>
-				        <Route path={`${this.props.match.path}/create-sales`} render={(props)=>(<CreateSales {...props} {...this.props}/>)}/>
-				        <Route path={`${this.props.match.path}/edit-sales/:id`} render={(props)=>(<EditSales {...props} {...this.props}/>)}/>
-				        <Route path={`${this.props.match.path}/view-sales`} render={(props)=>(<ViewSales {...props} {...this.props}/>)}/>
-				        <Route path={`${this.props.match.path}/create-vehicles`}  render={(props)=>(<CreateVehicles {...props} {...this.props}/>)}/>
-				        <Route path={`${this.props.match.path}/edit-vehicles/:id`}  render={(props)=>(<EditVehicles {...props} {...this.props}/>)}/>
-				        <Route path={`${this.props.match.path}/view-vehicles`}  render={(props)=>(<ViewVehicles {...props} {...this.props}/>)}/>
-				        <Route path={`${this.props.match.path}/edit-vehicle/:id`}  render={(props)=>(<EditVehicles {...props} {...this.props}/>)}/>
-				        <Route path={`${this.props.match.path}/dashboard`}  render={(props)=>(<DashboardIndex {...props} {...this.props}/>)}/>
-				        <Redirect to="/" />
-				     </Switch>
-					</div>
-					
-				</div>
-			</div>
-				     <Footer/>
-				</main>
-		      	
-			</div>
+				
 			</div>
 			
 			)

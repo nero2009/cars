@@ -98,7 +98,7 @@ class CreateVehicles extends Component{
 									</div>
 									<div className={this.state.err.registered.length >0?"has-error form-group":"form-group"}>
 									    <label className="control-label" >Registered</label>
-									    <select class="form-control" id="registered" value={this.state.registered} onChange={this.handleInputChange} name="registered">
+									    <select className="form-control" id="registered" value={this.state.registered} onChange={this.handleInputChange} name="registered">
 									      <option>Yes</option>
 									      <option>No</option>
 									    </select>
