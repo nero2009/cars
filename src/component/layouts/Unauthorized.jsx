@@ -5,7 +5,7 @@ import logoDark from '../../media/logo-dark.png'
 import logoLight from '../../media/logo-light.png'
 import BG from '../../media/inner.jpg'
 import {AuthService} from '../../Service'
-import {BASEURI,TOKENKEY} from '../../Constants'
+import {BASEURI,USERKEY} from '../../Constants'
 import Axios from 'axios'
 import localforage from 'localforage'
 import Preloader from '../loaders/Preloader.jsx'
@@ -24,9 +24,9 @@ class Unauthorized extends Component{
 			this.submit = this.submit.bind(this)
 	}
 	componentWillMount(){
-		localforage.getItem(TOKENKEY)
-		.then((token)=>{
-			if (token) {
+		localforage.getItem(USERKEY)
+		.then((user)=>{
+			if (user && user.token) {
 				this.props.history.push('/home/dashboard')
 				return;
 			}
@@ -61,9 +61,7 @@ class Unauthorized extends Component{
 		const Auth_Service = AuthService(BASEURI,Axios);
 		Auth_Service.login({password:this.state.password,email:this.state.email})
 		.then(res=>{
-			const {token}=res.data;
-			return localforage.setItem(TOKENKEY,token);
-		
+			return localforage.setItem(USERKEY,res.data);
 		})
 		.then( ()=> {
 			this.props.history.push('/home/dashboard')

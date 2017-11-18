@@ -23,7 +23,7 @@ import DashboardIndex from '../dashboard/DashboardIndex.jsx'
 import {Link,Route,Switch,Redirect} from 'react-router-dom'
 import localforage from 'localforage'
 import Preloader from '../loaders/Preloader.jsx'
-import {BASEURI,TOKENKEY} from '../../Constants'
+import {BASEURI,TOKENKEY, USERKEY} from '../../Constants'
  
 const routeMap= path=>{
 	const obj ={
@@ -67,12 +67,13 @@ class Authorized extends Component{
 			this.state={isSignedIn:false}
 	}
 	componentWillMount(){
-		localforage.getItem(TOKENKEY)
-		.then((token)=>{
-			if (token) {
-				this.setState({isSignedIn:true})
+		localforage.getItem(USERKEY)
+		.then((user)=>{
+			if (user && user.token) {
+				this.setState({isSignedIn:true,user})
 				return;
 			}
+			
 			this.props.history.push('/login')
 			
 		})
