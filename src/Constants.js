@@ -1,5 +1,7 @@
 export const LOGINURL = 'common/login'
-export const BASEURI='http://localhost/laolu/dmsserver/public/api/'
+export const BASEURI="http://api-carfacts.camstill.com/public/index.php/api/"
+//'http://localhost/laolu/dmsserver/public/api/'
+
 export const USERKEY='cars_user';
 export const CREATE_CAR_STAND_URL="carStands/create";
 export const GET_ALL_CAR_STAND_URL="carStands/getAll";

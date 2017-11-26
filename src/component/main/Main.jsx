@@ -23,9 +23,9 @@ class Main extends Component{
 	render(){
 		return (
 			<div>
-			<Route path="/" exact component={AsyncUnauthorizedLayout}  />
+			<Route path="/" exact render={(props)=><AsyncUnauthorizedLayout  {...props} swal={swal}  {...this.props}/>}  />
 			<Route path="/home" component={AuthorizedLayout} />
-			<Route  path="/login" component={AsyncUnauthorizedLayout} />
+			<Route  path="/login" render={(props)=><AsyncUnauthorizedLayout  {...props} swal={swal} {...this.props}/>} />
 			</div>
 			)
 	}
