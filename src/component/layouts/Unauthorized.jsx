@@ -37,6 +37,7 @@ class Unauthorized extends Component{
 		})
 	}
 	componentDidMount(){
+		const foo=require('../../assets/css/theme.css')
 		
 	}
 	dummy(e){

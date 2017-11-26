@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import './Nav.css';
 import {Link} from 'react-router-dom';
-
-
+import localforage from 'localforage'
+import {USERKEY} from '../../Constants'
+import USER_AVI from '../../assets/images/user1.png'
+import AMDIN_LOGO from '../../assets/images/admin-Logo.png'
 class Nav extends Component{
 
 	constructor(props){
@@ -10,6 +12,14 @@ class Nav extends Component{
 	}
 	componentDidMount(){
 		
+	}
+	logOut(e){
+		e.preventDefault();
+		localforage.removeItem(USERKEY).then(()=>{
+			this.props.history.push('/login')
+		}).catch(err=>{
+			
+		});
 	}
 
 	render(){
@@ -19,7 +29,7 @@ class Nav extends Component{
 				<div className="nav-header pull-left">
 					<div className="logo-wrap">
 						<a href="index.html">
-							<img className="brand-img" src="dist/img/admin-Logo.png" alt="brand"/>
+							<img className="brand-img" src={AMDIN_LOGO} alt="brand"/>
 							<span className="brand-text">CarFax DMS</span>
 						</a>
 					</div>
@@ -187,7 +197,7 @@ class Nav extends Component{
 						</ul>
 					</li>
 					<li className="dropdown auth-drp">
-						<a href="#" className="dropdown-toggle pr-0" data-toggle="dropdown"><img src="dist/img/user1.png" alt="user_auth" className="user-auth-img img-circle"/><span className="user-online-status"></span></a>
+						<a href="#" className="dropdown-toggle pr-0" data-toggle="dropdown"><img src={USER_AVI} alt="user_auth" className="user-auth-img img-circle"/><span className="user-online-status"></span></a>
 						<ul className="dropdown-menu user-auth-dropdown" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
 							<li>
 								<a href="profile.html"><i className="zmdi zmdi-account"></i><span>Profile</span></a>
@@ -218,7 +228,7 @@ class Nav extends Component{
 							</li>
 							<li className="divider"></li>
 							<li>
-								<a href="#"><i className="zmdi zmdi-power"></i><span>Log Out</span></a>
+								<a href="#" onClick={this.logOut.bind(this)}><i className="zmdi zmdi-power"></i><span>Log Out</span></a>
 							</li>
 						</ul>
 					</li>

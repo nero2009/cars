@@ -1,0 +1,17 @@
+.table .btn-info {
+    color: #fff !important;
+    background-color: #5bc0de !important;
+    border-color: #46b8da !important;
+}
+
+.table .btn-danger {
+    color: #fff !important;
+    background-color: #d9534f !important;
+    border-color: #d43f3a !important;
+}
+.carStandView 
+.flex-stat li {
+    float: left;
+    width: 25%;
+    text-align: center;
+}

@@ -3,9 +3,13 @@ import './Main.css';
 import {Link,Route} from 'react-router-dom';
 import AuthHoc from '../hocs/ShellHoc.jsx';
 import AuthorizedLayout from '../layouts/Authorized.jsx'
-import UnauthorizedLayout from '../layouts/Unauthorized.jsx'
+import asyncComponent from "../hocs/AsyncComponent";
+//import UnauthorizedLayout from '../layouts/Unauthorized.jsx'
 import swal from 'sweetalert';
 
+
+const AsyncUnauthorizedLayout = asyncComponent(() => import('../layouts/Unauthorized.jsx'));
+console.log(AsyncUnauthorizedLayout)
 
 class Main extends Component{
 
@@ -19,9 +23,9 @@ class Main extends Component{
 	render(){
 		return (
 			<div>
-			<Route path="/" exact render={props=><UnauthorizedLayout swal={swal} {...this.props} {...props} submitBtn={`Submit`}/> }  />
-			<Route path="/home" component={AuthHoc(AuthorizedLayout)} />
-			<Route  path="/login" render={props=><UnauthorizedLayout swal={swal} {...this.props} {...props} submitBtn={`Submit`}/> } />
+			<Route path="/" exact component={AsyncUnauthorizedLayout}  />
+			<Route path="/home" component={AuthorizedLayout} />
+			<Route  path="/login" component={AsyncUnauthorizedLayout} />
 			</div>
 			)
 	}

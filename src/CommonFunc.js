@@ -184,9 +184,9 @@ export const validate=(rule,value,fields=null)=>{
 }
 
 export const validationRules={
-	name:['required','max:50','string'],
+	name:['required','max:50','string','min:6'],
 	state:['required'],
-	location:['required'],
+	location:['required','min:15'],
 	contactName:['required','max:50','string'],
 	mname:['required','max:50','string'],
 	code:['required','max:3','string'],
@@ -209,8 +209,8 @@ export const validationRules={
 	color:['required','string'],
 	bodyType:['string','required'],
 	registered:['required'],
-	regNo:['required','string'],
-	vin:['number','required'],
+	regNo:['required','string',"min:7","max:8"],
+	vin:['string','required',"min:17","max:17"],
 	dealershipName:['required','string'],
 	to:['required','string'],
 	from:['string'],
@@ -219,7 +219,8 @@ export const validationRules={
 	cost:['required','number'],
 	amount:['required','number'],
 	balance:['required','number'],
-
+	standId:['required'],
+	isSold:['required']
 
 }
 
@@ -231,6 +232,17 @@ export const getErrorMsg=(error,name,controller=null)=>{
 	
 	if (name ==='contactName') {
 		name='contact name'
+	}
+	if (name ==='standId') {
+		name='car stand'
+	}
+	
+	if (name ==='registered') {
+		name='registration status'
+	}
+	
+	if (name ==='isSold') {
+		name='sales status'
 	}
 	if (name ==='state') {
 		a='a'

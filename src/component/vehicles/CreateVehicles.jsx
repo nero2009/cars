@@ -7,13 +7,22 @@ class CreateVehicles extends Component{
 		this.handleInputChange=this.handleInputChange.bind(this);
 		this.submit=this.submit.bind(this);
 		this.clear=this.clear.bind(this);
-		this.state={vin:'',manufacturer:'',model:'',modelYear:'',color:'',bodyType:'',registered:'',regNo:'',submitBtn:this.props.submitBtn,
-		err:{vin:'',manufacturer:'',model:'',modelYear:'',color:'',bodyType:'',registered:'',regNo:'',general:'',all: new Set()},disabled:false }
+		this.state={vin:'',manufacturer:'',model:'',modelYear:'',color:'',bodyType:'',registered:'',regNo:'',isSold:'',
+		standId:'',submitBtn:this.props.submitBtn,carStands:[],
+		err:{isSold:'',standId:'',vin:'',manufacturer:'',model:'',modelYear:'',color:'',bodyType:'',registered:'',regNo:'',general:'',all: new Set()},disabled:false }
 
 	}
 
 	componentDidMount() {
-		
+		const {GETUSERSTANDS,CARSTAND} = this.props.Constants;
+		const Id=this.props.user.id;
+		this.props.ServiceObj.getItem(CARSTAND,GETUSERSTANDS,Id)
+		.then(({data})=>{
+			this.setState({carStands:data || []});
+		})
+		.catch(err=>{
+
+		})
 	}
 
 	handleInputChange(e){
@@ -23,11 +32,12 @@ class CreateVehicles extends Component{
 	}
 
 	clear(){
-		this.setState({vin:'',manufacturer:'',model:'',modelYear:'',color:'',bodyType:'',registered:'',regNo:''})
+		this.setState({isSold:'',standId:'',vin:'',manufacturer:'',model:'',modelYear:'',color:'',bodyType:'',registered:'',regNo:''})
 	}
 
 	submit(){
 		this.props.validatorAll([
+				{name:'standId',value:this.state.standId},{name:'isSold',value:this.state.isSold},
 				{name:'vin',value:this.state.vin},{name:'manufacturer',value:this.state.manufacturer},
 				{name:'model',value:this.state.model},{name:'modelYear',value:this.state.modelYear},
 				{name:'color',value:this.state.color},{name:'bodyType',value:this.state.bodyType},
@@ -37,10 +47,20 @@ class CreateVehicles extends Component{
             // this.setState({sending:false,disabled:false})
             return;
         }
-        this.props.startRequest.call(this);
-		const {vin,manufacturer,model,modelYear,color,bodyType,registered,regNo} = this.state;
-		const data ={vin,manufacturer,model,modelYear,color,bodyType,registered,regNo}
-		this.props.failedRequest.call(this,"vehicle not created.");
+		this.props.startRequest.call(this);
+		const {VEHICLE,CREATE}=this.props.Constants;
+		const {vin,manufacturer,model,modelYear,color,bodyType,registered,regNo,standId,isSold} = this.state;
+		const data ={standId,isSold: isSold=== 'true'?true:false,VIN:vin,manufacturer,model,modelYear,color,bodyType,isRegistered:registered ==="true"?true:false,regNo}
+
+		this.props.ServiceObj.createItem(data,VEHICLE,CREATE)
+		.then(({data})=>{
+			this.props.successRequest.call(this,"vehicle created.");
+			this.clear.call(this)
+		})
+		.catch(err=>{
+			this.props.failedRequest.call(this,"vehicle not created.");
+		
+		})
 	}
 
 	render(){
@@ -54,6 +74,17 @@ class CreateVehicles extends Component{
 						<div className="panel-wrapper collapse in">
 							<div className="panel-body">
 								<form >
+								<div className={this.state.err.standId.length >0?"has-error form-group":"form-group"}>
+									    <label className="control-label" >Car Stand</label>
+									    <select className="form-control" id="standId" value={this.state.standId} onChange={this.handleInputChange} name="standId">
+										<option disabled value="">Select a car stand</option>
+										{
+											this.state.carStands.map((item,index)=><option value={item.standId} key={++index}>{item.name}</option>)
+										}
+									      
+									    </select>
+									    <span className="error-text">{this.state.err.standId}</span>
+									 </div>
 									<div className={this.state.err.vin.length > 0?"has-error form-group":"form-group"}>
 										<label htmlFor="" className="control-label">
 											VIN(Vehicle Identification Number)
@@ -79,7 +110,7 @@ class CreateVehicles extends Component{
 										<label htmlFor="" className="control-label">
 											Model Year
 										</label>
-										<input className="form-control" name="modelYear" id="modelYear" value={this.state.modelYear} type="number" onChange={this.handleInputChange} />
+										<input className="form-control" name="modelYear" id="modelYear" value={this.state.modelYear} type="text" onChange={this.handleInputChange} />
 										<span className="error-text">{this.state.err.modelYear}</span>
 									</div>
 									<div className={this.state.err.color.length >0?"has-error form-group":"form-group"}>
@@ -99,10 +130,20 @@ class CreateVehicles extends Component{
 									<div className={this.state.err.registered.length >0?"has-error form-group":"form-group"}>
 									    <label className="control-label" >Registered</label>
 									    <select className="form-control" id="registered" value={this.state.registered} onChange={this.handleInputChange} name="registered">
-									      <option>Yes</option>
-									      <option>No</option>
+										<option disabled value="">Select registration status</option>
+									      <option value={true}>Yes</option>
+									      <option value={false}>No</option>
 									    </select>
 									    <span className="error-text">{this.state.err.registered}</span>
+									 </div>
+									 <div className={this.state.err.isSold.length >0?"has-error form-group":"form-group"}>
+									    <label className="control-label" >Sold</label>
+									    <select className="form-control" id="isSold" value={this.state.isSold} onChange={this.handleInputChange} name="isSold">
+										<option disabled value="">Select a sales status</option>
+									      <option value={true}>Yes</option>
+									      <option value={false}>No</option>
+									    </select>
+									    <span className="error-text">{this.state.err.isSold}</span>
 									 </div>
 									 <div className={this.state.err.regNo.length >0?"has-error form-group":"form-group"}>
 										<label htmlFor="" className="control-label">

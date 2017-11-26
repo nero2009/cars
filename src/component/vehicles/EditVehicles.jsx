@@ -10,14 +10,18 @@ class EditVehicles extends Component{
 		this.state={vin:'',manufacturer:'',model:'',modelYear:'',color:'',bodyType:'',registered:'',regNo:'',submitBtn:this.props.submitBtn,
 		err:{vin:'',manufacturer:'',model:'',modelYear:'',color:'',bodyType:'',registered:'',regNo:'',general:'',all: new Set()},disabled:false }
 	}
+	componentWillMount(){
+		const id=this.props.match.params.id;
+		const {GET,VEHICLE}=this.props.Constants;
+		this.props.ServiceObj.getItem(VEHICLE,GET,id)
+		.then(({data:{vin,manufacturer,model,Id,modelYear,bodyType,regNo,isRegistered,color,recordStatus}})=>{
+			this.setState({vin,manufacturer,model,modelYear,bodyType,regNo,Id,registered:isRegistered,color,recordStatus});
+		})
+		.catch(err=>{
 
+		})
+	}
 	componentDidMount() {
-
-		const recievedData={vin:'FACL1486',manufacturer:'Ford',model:'Edge',modelYear:'2011',color:'Blue',bodyType:'SUV',
-							registered:'Yes',regNo:'!0Cj011160'};
-		this.setState({recievedData,vin:recievedData.vin,manufacturer:recievedData.manufacturer,
-			model:recievedData.model,modelYear:recievedData.modelYear,color:recievedData.color,bodyType:recievedData.bodyType,
-			registered:recievedData.registered,regNo:recievedData.regNo});
 	}
 
 	handleInputChange(e){
@@ -44,8 +48,8 @@ class EditVehicles extends Component{
             return;
         }
         this.props.startRequest.call(this);
-		const {vin,manufacturer,model,modelYear,color,bodyType,registered,regNo} = this.state;
-		const data ={vin,manufacturer,model,modelYear,color,bodyType,registered,regNo}
+		const {vin,manufacturer,model,modelYear,color,bodyType,registered,regNo,recordStatus} = this.state;
+		const data ={vin,manufacturer,model,modelYear,color,bodyType,isRegistered:registered,regNo,isSold:false,recordStatus}
 		this.props.failedRequest.call(this,"vehicle not created.");
 	}
 

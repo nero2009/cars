@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './SideNav.css';
 import {Link} from 'react-router-dom';
-
+import localforage from 'localforage'
+import {USERKEY} from '../../Constants'
 
 class SideNav extends Component{
 
@@ -11,18 +12,26 @@ class SideNav extends Component{
 	componentDidMount(){
 		
 	}
+	logOut(e){
+		e.preventDefault();
+		localforage.removeItem(USERKEY).then(()=>{
+			this.props.history.push('/login')
+		}).catch(err=>{
+			
+		});
+	}
 
 	render(){
 		return (
 			<div>
 			<div className="fixed-sidebar-left">
-			<ul className="nav navbar-nav side-nav nicescroll-bar">
+			<ul className="nav navbar-nav side-nav nicescroll-bar" style={{overflowX: "hidden"}}>
 				<li className="navigation-header">
 					<span>Main</span> 
 					<i className="zmdi zmdi-more"></i>
 				</li>
 				<li>
-					<a href="merchant-dasboard.html"><div className="pull-left"><i className="zmdi zmdi-landscape mr-20 active-page"></i><span className="right-nav-text">Dashboard</span></div><div className="clearfix"></div></a>
+					<Link to="/home/dashboard"><div className="pull-left"><i className="zmdi zmdi-landscape mr-20 active-page"></i><span className="right-nav-text">Dashboard</span></div><div className="clearfix"></div></Link>
 				</li>
 				<li>
 					<a href="javascript:void(0);" data-toggle="collapse" data-target="#dashboard_dr"><div className="pull-left"><i className="zmdi zmdi-car-wash mr-20"></i><span className="right-nav-text">Car Stand</span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
@@ -39,10 +48,10 @@ class SideNav extends Component{
 					<a className="active" href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div className="pull-left"><i className="zmdi zmdi-car mr-20"></i><span className="right-nav-text">Vehicles</span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
 					<ul id="ecom_dr" className="collapse collapse-level-1">
 						<li>
-							<Link to="/home/view-vehicles">Vehicle List</Link>
+							<Link to="/home/vehicles">Vehicle List</Link>
 						</li>
 						<li>
-							<Link to="/home/create-vehicles">Add New</Link>
+							<Link to="/home/vehicles/create">Add New</Link>
 						</li>
 					</ul>
 				</li>
@@ -116,7 +125,7 @@ class SideNav extends Component{
 					<i className="zmdi zmdi-more"></i>
 				</li>
 				<li>
-					<a href="../login.html"><div className="pull-left"><i className="zmdi zmdi-rotate-left mr-20"></i><span className="right-nav-text">Logout</span></div><div className="clearfix"></div></a>
+					<a href="#" onClick={this.logOut.bind(this)}><div className="pull-left"><i className="zmdi zmdi-rotate-left mr-20"></i><span className="right-nav-text">Logout</span></div><div className="clearfix"></div></a>
 				</li>
 			</ul>
 		</div>

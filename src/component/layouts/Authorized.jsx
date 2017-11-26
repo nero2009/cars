@@ -20,11 +20,17 @@ import CreateVehicles from '../vehicles/CreateVehicles.jsx'
 import ViewVehicles from '../vehicles/ViewVehicles.jsx'
 import EditVehicles from '../vehicles/EditVehicles.jsx'
 import DashboardIndex from '../dashboard/DashboardIndex.jsx'
+import CarStandView from '../carstand/CarStandView.jsx'
 import {Link,Route,Switch,Redirect} from 'react-router-dom'
 import localforage from 'localforage'
 import Preloader from '../loaders/Preloader.jsx'
-import {BASEURI,TOKENKEY, USERKEY} from '../../Constants'
- 
+import  {BASEURI,TOKENKEY, USERKEY} from '../../Constants'
+import Axios from 'axios'
+import {Service} from '../../Service'
+import {failedRequest,startRequest,successRequest,validatorAll,validator} from '../../CommonFunc'
+import swal from 'sweetalert';
+import * as Constants from '../../Constants'
+
 const routeMap= path=>{
 	const obj ={
 		['/home/create-car-stand']:'Create car stand'
@@ -64,13 +70,19 @@ class Authorized extends Component{
 
 	constructor(props){
 			super(props);
-			this.state={isSignedIn:false}
+			this.state={isSignedIn:false,user:{},token:'',fakeProps:{},sending:true,page:{}};
 	}
 	componentWillMount(){
+		const LoaderButton=<span><i className="fa fa-circle-o-notch fa-spin"></i> Loading</span>;
 		localforage.getItem(USERKEY)
 		.then((user)=>{
 			if (user && user.token) {
-				this.setState({isSignedIn:true,user})
+				//console.log(Service(BASEURI,Axios,user.token))
+				const ServiceObj=Service(BASEURI,Axios,user.token);
+				this.setState({user})
+				this.setState({isSignedIn:true,sending:false,fakeProps:{swal,ServiceObj,user:this.state.user,Constants,
+					 failedRequest,
+					 validator,validatorAll,LoaderButton,startRequest,successRequest,submitBtn:`Submit`}})
 				return;
 			}
 			
@@ -94,8 +106,8 @@ class Authorized extends Component{
 				{
 					this.state.isSignedIn && 
 					<div className="wrapper theme-1-active pimary-color-red" >
-					<Nav/>
-					<SideNav/>
+					<Nav {...this.props}/>
+					<SideNav {...this.props}/>
 					<main className="page-wrapper" style={{minHeight:window.innerHeight}}>
 					<div className="row heading-bg">
 						<div className="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -109,24 +121,26 @@ class Authorized extends Component{
 					<div className="row">
 						<div className="col-md-12">
 							<Switch>
-							<Route path={this.props.match.path} exact render={(props)=>(<Home {...props} {...this.props}/>)} />
-							 <Route path={`${this.props.match.path}/car-stand`} render={(props)=>(<CarStand {...props} {...this.props}/>)}/>
-							<Route path={`${this.props.match.path}/foo`}  render={(props)=>(<Login {...props} {...this.props}/>)}/>
-							<Route path={`${this.props.match.path}/create-car-stand`}  render={(props)=>(<CreateCarStand {...props} {...this.props}/>)}/>
-							<Route path={`${this.props.match.path}/edit-car-stand/:id`}  render={(props)=>(<EditCarStand {...props} {...this.props}/>)}/>
-							<Route path={`${this.props.match.path}/create-agents`} render={(props)=>(<CreateAgents {...props} {...this.props}/>)}/>
-							<Route path={`${this.props.match.path}/edit-agents/:id`} render={(props)=>(<EditAgents {...props} {...this.props}/>)}/>
-							<Route path={`${this.props.match.path}/view-agents`} render={(props)=>(<ViewAgents {...props} {...this.props}/>)}/>
-							<Route path={`${this.props.match.path}/create-message`} render={(props)=>(<CreateMessage {...props} {...this.props}/>)}/>
-							<Route path={`${this.props.match.path}/view-message`} render={(props)=>(<ViewMessage {...props} {...this.props}/>)}/>
-							<Route path={`${this.props.match.path}/create-sales`} render={(props)=>(<CreateSales {...props} {...this.props}/>)}/>
-							<Route path={`${this.props.match.path}/edit-sales/:id`} render={(props)=>(<EditSales {...props} {...this.props}/>)}/>
-							<Route path={`${this.props.match.path}/view-sales`} render={(props)=>(<ViewSales {...props} {...this.props}/>)}/>
-							<Route path={`${this.props.match.path}/create-vehicles`}  render={(props)=>(<CreateVehicles {...props} {...this.props}/>)}/>
-							<Route path={`${this.props.match.path}/edit-vehicles/:id`}  render={(props)=>(<EditVehicles {...props} {...this.props}/>)}/>
-							<Route path={`${this.props.match.path}/view-vehicles`}  render={(props)=>(<ViewVehicles {...props} {...this.props}/>)}/>
-							<Route path={`${this.props.match.path}/edit-vehicle/:id`}  render={(props)=>(<EditVehicles {...props} {...this.props}/>)}/>
-							<Route path={`${this.props.match.path}/dashboard`}  render={(props)=>(<DashboardIndex {...props} {...this.props}/>)}/>
+							<Route path={this.props.match.path} exact render={(props)=>(<DashboardIndex {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)} />
+							 <Route path={`${this.props.match.path}/car-stand`} exact render={(props)=>(<CarStand {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							 <Route path={`${this.props.match.path}/car-stand/:id`} exact render={(props)=>(<CarStandView {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							
+							<Route path={`${this.props.match.path}/car-stand/edit/:id`}  render={(props)=>(<EditCarStand {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							<Route path={`${this.props.match.path}/create-car-stand`}   render={(props)=>(<CreateCarStand {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							
+							<Route path={`${this.props.match.path}/create-agents`} render={(props)=>(<CreateAgents {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							<Route path={`${this.props.match.path}/edit-agents/:id`} render={(props)=>(<EditAgents {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							<Route path={`${this.props.match.path}/view-agents`} render={(props)=>(<ViewAgents {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							<Route path={`${this.props.match.path}/create-message`} render={(props)=>(<CreateMessage {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							<Route path={`${this.props.match.path}/view-message`} render={(props)=>(<ViewMessage {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							<Route path={`${this.props.match.path}/create-sales`} render={(props)=>(<CreateSales {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							<Route path={`${this.props.match.path}/edit-sales/:id`} render={(props)=>(<EditSales {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							<Route path={`${this.props.match.path}/view-sales`} render={(props)=>(<ViewSales {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							<Route path={`${this.props.match.path}/vehicles/create`}  render={(props)=>(<CreateVehicles {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							<Route path={`${this.props.match.path}/vehicles/edit/:id`}  render={(props)=>(<EditVehicles {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							<Route path={`${this.props.match.path}/vehicles`} exact  render={(props)=>(<ViewVehicles {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							<Route path={`${this.props.match.path}/edit-vehicle/:id`}  render={(props)=>(<EditVehicles {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							<Route path={`${this.props.match.path}/dashboard`}  render={(props)=>(<DashboardIndex {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 							<Redirect to="/" />
 						 </Switch>
 						</div>

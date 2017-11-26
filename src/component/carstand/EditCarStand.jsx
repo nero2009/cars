@@ -7,16 +7,31 @@ class EditCarStand extends Component{
 		this.handleInputChange=this.handleInputChange.bind(this);
 		this.submit=this.submit.bind(this);
 		this.clear=this.clear.bind(this);
-		this.state={name:'',stateId:'',location:'',receivedStates:[],submitBtn:this.props.submitBtn,
+		this.state={name:'',stateId:'',location:'',receivedStates:[],submitBtn:this.props.submitBtn,requestingStates:true,
 		err:{name:'',location:'',state:'',general:'',all:new Set()},
 		disabled:false};
 		
 	}
+	componentWillMount(){
+		const id=this.props.match.params.id;
+		const {GET,CARSTAND}=this.props.Constants;
+		this.props.ServiceObj.getItem(CARSTAND,GET,id)
+		.then(({data:{stateId,name,location,Id,recordStatus}})=>{
+			this.setState({name,stateId,location,Id,recordStatus});
+		})
+		.catch(err=>{
+
+		})
+	}
 	componentDidMount(){
-		this.setState({receivedStates:[{Id:1,Name:'Lagos'},{Id:2,Name:'Edo'}]})
-		//ajax request here
-		const recievedData={name:'foo foo',stateId:1,location:'Ajah'};
-		this.setState({recievedData,name:recievedData.name,stateId:recievedData.stateId,location:recievedData.location});
+		this.props.ServiceObj.getAllStates()
+		.then(({data})=>{
+			this.setState({receivedStates:data,requestingStates:false});
+		})
+		.catch(err=>{
+
+		})
+		
 	}
 	handleInputChange(e){
 		this.setState({[e.target.name]:e.target.value});
@@ -33,14 +48,26 @@ class EditCarStand extends Component{
             return;
         }
 		this.props.startRequest.call(this);
-		const {stateId,name,location}=this.state;
+		const {stateId,name,location,Id,recordStatus}=this.state;
+		const {CARSTAND,UPDATE}=this.props.Constants;
 		const data={
+				dealerId:"04ca8dc5-1ac2-4d7c-9566-d5343ec7d813",
 				stateId,
 				name:name.trim(),
-				location:location.trim()
+				location:location.trim(),
+				recordStatus
 		}
-        
-		this.props.failedRequest.call(this,"Car stand not created.");
+
+		this.props.ServiceObj.updateItem(CARSTAND,UPDATE,data,Id)
+		.then(({data})=>{
+			this.props.successRequest.call(this,"Car stand updated.");
+			setTimeout(() => this.props.history.goBack(), 0);
+			
+		})
+		.catch(err=>{
+			this.props.failedRequest.call(this,"Car stand not updated.");
+		
+		})
 	}
 
 		render(){
@@ -69,10 +96,10 @@ class EditCarStand extends Component{
 								State
 							</label>
 							<select className="form-control" id="state" value={this.state.stateId} onChange={this.handleInputChange} name="stateId">
-							  <option disabled value="">Select a state</option>
-							  {this.state.receivedStates.map((item,index)=><option value={item.Id} key={++index}>{item.Name}</option>)}
-							  
-							</select>
+							<option disabled value="">{this.state.requestingStates?'loading...':'Select a state'}</option>
+							{this.state.receivedStates.map((item,index)=><option value={item.stateId} key={++index}>{item.name}</option>)}
+							
+						  </select>
 							<span className="error-text">{this.state.err.state}</span>
 						</div>
 						<div className={this.state.err.location.length > 0?"has-error form-group":"form-group"}>
