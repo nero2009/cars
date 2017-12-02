@@ -34,13 +34,21 @@ class SideNav extends Component{
 					<Link to="/home/dashboard"><div className="pull-left"><i className="zmdi zmdi-landscape mr-20 active-page"></i><span className="right-nav-text">Dashboard</span></div><div className="clearfix"></div></Link>
 				</li>
 				<li>
-					<a href="javascript:void(0);" data-toggle="collapse" data-target="#dashboard_dr"><div className="pull-left"><i className="zmdi zmdi-car-wash mr-20"></i><span className="right-nav-text">Car Stand</span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
-					<ul id="dashboard_dr" className="collapse collapse-level-1">
+					<a href="javascript:void(0);" data-toggle="collapse" data-target="#d_dr"><div className="pull-left"><i className="zmdi zmdi-car-wash mr-20"></i><span className="right-nav-text">Car Stand</span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
+					<ul id="d_dr" className="collapse collapse-level-1">
 						<li>
 							<Link  to="/home/car-stand">Car Stand List</Link>
 						</li>
 						<li>
 							<Link  to="/home/create-car-stand">Add New</Link>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:void(0);" data-toggle="collapse" data-target="#dashboard_dr"><div className="pull-left"><i className="zmdi zmdi-car-wash mr-20"></i><span className="right-nav-text">Dealers</span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
+					<ul id="dashboard_dr" className="collapse collapse-level-1">
+						<li>
+							<Link  to="/home/dealers">Car Stand List</Link>
 						</li>
 					</ul>
 				</li>

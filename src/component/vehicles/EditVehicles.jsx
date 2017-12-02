@@ -7,21 +7,31 @@ class EditVehicles extends Component{
 		this.handleInputChange=this.handleInputChange.bind(this);
 		this.submit=this.submit.bind(this);
 		this.clear=this.clear.bind(this);
-		this.state={vin:'',manufacturer:'',model:'',modelYear:'',color:'',bodyType:'',registered:'',regNo:'',submitBtn:this.props.submitBtn,
-		err:{vin:'',manufacturer:'',model:'',modelYear:'',color:'',bodyType:'',registered:'',regNo:'',general:'',all: new Set()},disabled:false }
+		this.state={vin:'',manufacturer:'',model:'',modelYear:'',color:'',carStands:[],standId:'',isSold:'',
+		bodyType:'',registered:'',regNo:'',submitBtn:this.props.submitBtn,sending:false,
+		err:{isSold:'',standId:'',vin:'',manufacturer:'',model:'',modelYear:'',color:'',bodyType:'',registered:'',regNo:'',general:'',all: new Set()},disabled:false }
 	}
 	componentWillMount(){
 		const id=this.props.match.params.id;
 		const {GET,VEHICLE}=this.props.Constants;
 		this.props.ServiceObj.getItem(VEHICLE,GET,id)
-		.then(({data:{vin,manufacturer,model,Id,modelYear,bodyType,regNo,isRegistered,color,recordStatus}})=>{
-			this.setState({vin,manufacturer,model,modelYear,bodyType,regNo,Id,registered:isRegistered,color,recordStatus});
+		.then(({data:{vin,manufacturer,model,Id,modelYear,bodyType,regNo,isRegistered,color,recordStatus,standId,isSold}})=>{
+			this.setState({vin,manufacturer,model,modelYear,bodyType,regNo,Id,registered:isRegistered,color,recordStatus,standId,isSold});
 		})
 		.catch(err=>{
 
 		})
 	}
 	componentDidMount() {
+		const {GETUSERSTANDS,CARSTAND} = this.props.Constants;
+		const Id=this.props.user.id;
+		this.props.ServiceObj.getItem(CARSTAND,GETUSERSTANDS,Id)
+		.then(({data})=>{
+			this.setState({carStands:data || []});
+		})
+		.catch(err=>{
+
+		})
 	}
 
 	handleInputChange(e){
@@ -31,26 +41,46 @@ class EditVehicles extends Component{
 	}
 
 	clear(){
-		this.setState({vin:this.state.recievedData.vin,manufacturer:this.state.recievedData.manufacturer,
+		this.setState({vin:this.state.recievedData.vin,
+			manufacturer:this.state.recievedData.manufacturer,standId:this.state.recievedData.standId,isSold:this.state.recievedData.isSold,
 			model:this.state.recievedData.model,modelYear:this.state.recievedData.modelYear,color:this.state.recievedData.color,
 			bodyType:this.state.recievedData.bodyType,registered:this.state.recievedData.registered,regNo:this.state.recievedData.regNo})
 	}
 
 	submit(){
+		this.setState({sending:true});
+		let data;
 		this.props.validatorAll([
 				{name:'vin',value:this.state.vin},{name:'manufacturer',value:this.state.manufacturer},
 				{name:'model',value:this.state.model},{name:'modelYear',value:this.state.modelYear},
 				{name:'color',value:this.state.color},{name:'bodyType',value:this.state.bodyType},
-				{name:'registered',value:this.state.registered},{name:'regNo',value:this.state.regNo}],
+				{name:'registered',value:this.state.registered},{name:'regNo',value:parseInt(this.state.registered) === 1?this.state.regNo:'hhhhhhh'}],
 				'Vehicle',this)
 		if (this.state.err.all.size > 0) {
-            // this.setState({sending:false,disabled:false})
+             this.setState({sending:false})
             return;
         }
         this.props.startRequest.call(this);
-		const {vin,manufacturer,model,modelYear,color,bodyType,registered,regNo,recordStatus} = this.state;
-		const data ={vin,manufacturer,model,modelYear,color,bodyType,isRegistered:registered,regNo,isSold:false,recordStatus}
-		this.props.failedRequest.call(this,"vehicle not created.");
+		const {vin,manufacturer,model,modelYear,color,bodyType,registered,regNo,recordStatus,Id,standId} = this.state;
+		 data ={VIN:vin,manufacturer,standId,model,modelYear,color,bodyType,isRegistered:registered,regNo,isSold:false,recordStatus}
+		if (parseInt(this.state.registered) === 0) {
+			data ={VIN:vin,manufacturer,standId,model,modelYear,color,bodyType,isRegistered:registered,isSold:false,recordStatus}
+		}
+		
+		const {VEHICLE,UPDATE}=this.props.Constants;
+		
+		this.props.ServiceObj.updateItem(VEHICLE,UPDATE,data,Id)
+		.then(({data})=>{
+			this.props.successRequest.call(this,"Vehicle updated.");
+			this.setState({sending:false})
+			setTimeout(() => this.props.history.goBack(), 0);
+			
+		})
+		.catch(err=>{
+			this.setState({sending:false})
+			this.props.failedRequest.call(this,"Vehicle not updated.");
+		
+		})
 	}
 
 	render(){
@@ -64,6 +94,17 @@ class EditVehicles extends Component{
 						<div className="panel-wrapper collapse in">
 							<div className="panel-body">
 								<form >
+								<div className={this.state.err.standId.length >0?"has-error form-group":"form-group"}>
+									    <label className="control-label" >Car Stand</label>
+									    <select className="form-control" id="standId" value={this.state.standId} onChange={this.handleInputChange} name="standId">
+										<option disabled value="">Select a car stand</option>
+										{
+											this.state.carStands.map((item,index)=><option value={item.standId} key={++index}>{item.name}</option>)
+										}
+									      
+									    </select>
+									    <span className="error-text">{this.state.err.standId}</span>
+									 </div>
 									<div className={this.state.err.vin.length > 0?"has-error form-group":"form-group"}>
 										<label htmlFor="" className="control-label">
 											VIN(Vehicle Identification Number)
@@ -109,20 +150,33 @@ class EditVehicles extends Component{
 									<div className={this.state.err.registered.length >0?"has-error form-group":"form-group"}>
 									    <label className="control-label" >Registered</label>
 									    <select class="form-control" id="registered" value={this.state.registered} onChange={this.handleInputChange} name="registered">
-									      <option>Yes</option>
-									      <option>No</option>
+									      <option value="1" >Yes</option>
+									      <option value="0">No</option>
 									    </select>
 									    <span className="error-text">{this.state.err.registered}</span>
 									 </div>
-									 <div className={this.state.err.regNo.length >0?"has-error form-group":"form-group"}>
-										<label htmlFor="" className="control-label">
-											Reg No
-										</label>
-										<input className="form-control" id="regNo" name="regNo" value={this.state.regNo}  onChange={this.handleInputChange} />
-										<span className="error-text">{this.state.err.regNo}</span>
-									</div>
+									 {
+										parseInt(this.state.registered) === 1 && 
+										<div className={this.state.err.regNo.length > 0 ? "has-error form-group" : "form-group"}>
+											<label htmlFor="" className="control-label">
+												Reg No
+										 </label>
+											<input className="form-control" id="regNo" name="regNo" value={this.state.regNo} onChange={this.handleInputChange} />
+											<span className="error-text">{this.state.err.regNo}</span>
+										</div>
+									 }
+									 
+									<div className={this.state.err.isSold.length >0?"has-error form-group":"form-group"}>
+									    <label className="control-label" >Sold</label>
+									    <select className="form-control" id="isSold" value={this.state.isSold} onChange={this.handleInputChange} name="isSold">
+										<option disabled value="">Select a sales status</option>
+									      <option value="1">Yes</option>
+									      <option value="0">No</option>
+									    </select>
+									    <span className="error-text">{this.state.err.isSold}</span>
+									 </div>
 									<div className="form-actions mt-10">
-										<button type="button" className="btn btn-success  mr-10" disabled={this.state.disabled || this.state.err.all.size > 0} onClick={this.submit}> Submit</button>
+										<button type="button" className="btn btn-success  mr-10" disabled={this.state.disabled || this.state.err.all.size > 0} onClick={this.submit}>{this.state.sending?'Sending...':'Submit'}</button>
 										<button type="button" className="btn btn-default" onClick={this.clear}>Cancel</button>
 									</div>
 								</form>

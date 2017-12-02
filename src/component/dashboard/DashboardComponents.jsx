@@ -281,7 +281,7 @@ export const SalesGraph = (props)=>{
 }
 export const PaidFullRate =(props)=>{
 	return(
-		<div class="panel panel-default card-view pt-0">
+		<div className="panel panel-default card-view pt-0">
 							<div className="panel-wrapper collapse in">
 								<div className="panel-body pa-0">
 									<div className="sm-data-box bg-white">

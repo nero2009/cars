@@ -21,6 +21,9 @@ import ViewVehicles from '../vehicles/ViewVehicles.jsx'
 import EditVehicles from '../vehicles/EditVehicles.jsx'
 import DashboardIndex from '../dashboard/DashboardIndex.jsx'
 import CarStandView from '../carstand/CarStandView.jsx'
+import Dealer from '../dealers/Dealers.jsx'
+import EditDealer from '../dealers/EditDealer.jsx'
+import DealerView from '../dealers/DealersView.jsx'
 import {Link,Route,Switch,Redirect} from 'react-router-dom'
 import localforage from 'localforage'
 import Preloader from '../loaders/Preloader.jsx'
@@ -131,6 +134,11 @@ class Authorized extends Component{
 							<Route path={`${this.props.match.path}/create-agents`} render={(props)=>(<CreateAgents {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 							<Route path={`${this.props.match.path}/edit-agents/:id`} render={(props)=>(<EditAgents {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 							<Route path={`${this.props.match.path}/view-agents`} render={(props)=>(<ViewAgents {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+
+							<Route path={`${this.props.match.path}/dealers`} exact render={(props)=>(<Dealer {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							<Route path={`${this.props.match.path}/dealers/edit/:id`}  render={(props)=>(<EditDealer {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							<Route path={`${this.props.match.path}/dealers/:id`}  render={(props)=>(<DealerView {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+
 							<Route path={`${this.props.match.path}/create-message`} render={(props)=>(<CreateMessage {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 							<Route path={`${this.props.match.path}/view-message`} render={(props)=>(<ViewMessage {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 							<Route path={`${this.props.match.path}/create-sales`} render={(props)=>(<CreateSales {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>

@@ -220,7 +220,9 @@ export const validationRules={
 	amount:['required','number'],
 	balance:['required','number'],
 	standId:['required'],
-	isSold:['required']
+	isSold:['required'],
+	contactName:['required','string','min:6'],
+	contactNumber:['required','phoneNumber']
 
 }
 

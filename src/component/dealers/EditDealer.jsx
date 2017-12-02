@@ -1,29 +1,31 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 
-class EditCarStand extends Component{
+class EditDealer extends Component{
 	constructor(props) {
 		super(props);
 		this.handleInputChange=this.handleInputChange.bind(this);
 		this.submit=this.submit.bind(this);
 		this.clear=this.clear.bind(this);
-		this.state={name:'',stateId:'',location:'',receivedStates:[],submitBtn:this.props.submitBtn,requestingStates:true,
-		err:{name:'',location:'',state:'',general:'',all:new Set()},
+		this.state={data:{stateId:'',contactNumber:'',contactName:'',dealershipName:''},receivedStates:[],submitBtn:this.props.submitBtn,requestingStates:true,
+		err:{name:'',contactName:'',contactNumber:'',state:'',general:'',all:new Set()},
 		disabled:false};
 		
 	}
 	componentWillMount(){
-		const id=this.props.match.params.id;
-		const {GET,CARSTAND}=this.props.Constants;
-		this.props.ServiceObj.getItem(CARSTAND,GET,id)
-		.then(({data:{stateId,name,location,Id,recordStatus,dealerId}})=>{
-			this.setState({name,stateId,location,Id,recordStatus,dealerId});
+		
+	}
+	componentDidMount(){
+        const id=this.props.match.params.id;
+		const {GET,DEALERS}=this.props.Constants;
+		this.props.ServiceObj.getItem(DEALERS,GET,id)
+		.then(({data})=>{
+			this.setState({data:{...data},receivedData:{...data}});
 		})
 		.catch(err=>{
 
 		})
-	}
-	componentDidMount(){
+
 		this.props.ServiceObj.getAllStates()
 		.then(({data})=>{
 			this.setState({receivedStates:data,requestingStates:false});
@@ -34,38 +36,32 @@ class EditCarStand extends Component{
 		
 	}
 	handleInputChange(e){
-		this.setState({[e.target.name]:e.target.value});
-		this.props.validator({name:e.target.id,value:e.target.value},'car stand',this);
+		this.setState({data:{...this.state.data,[e.target.name]:e.target.value}});
+		this.props.validator({name:e.target.id,value:e.target.value},'dealer',this);
         return;
 	}
 	clear(){
-		this.setState({name:this.state.recievedData.name,stateId:this.state.recievedData.stateId,location:this.state.recievedData.location})
+		this.setState({data:this.state.receivedData})
 	}
 	submit(){
-		this.props.validatorAll([{name:'name',value:this.state.name},{name:'location',value:this.state.location},{name:"state",value:this.state.stateId}],'car stand',this);
+		//this.props.validatorAll([{name:'name',value:this.state.name},{name:'location',value:this.state.location},{name:"state",value:this.state.stateId}],'car stand',this);
         if (this.state.err.all.size > 0) {
             // this.setState({sending:false,disabled:false})
             return;
         }
 		this.props.startRequest.call(this);
-		const {stateId,name,location,Id,recordStatus,dealerId}=this.state;
-		const {CARSTAND,UPDATE}=this.props.Constants;
-		const data={
-				dealerId,
-				stateId,
-				name:name.trim(),
-				location:location.trim(),
-				recordStatus
-		}
+		const {data}=this.state;
+		const {DEALERS,UPDATE}=this.props.Constants;
+		
 
-		this.props.ServiceObj.updateItem(CARSTAND,UPDATE,data,Id)
+		this.props.ServiceObj.updateItem(DEALERS,UPDATE,{...data,userId:this.props.user.id},data.Id)
 		.then(({data})=>{
-			this.props.successRequest.call(this,"Car stand updated.");
+			this.props.successRequest.call(this,"Dealer updated.");
 			setTimeout(() => this.props.history.goBack(), 0);
 			
 		})
 		.catch(err=>{
-			this.props.failedRequest.call(this,"Car stand not updated.");
+			this.props.failedRequest.call(this,"Dealer not updated.");
 		
 		})
 	}
@@ -87,7 +83,7 @@ class EditCarStand extends Component{
 							<label htmlFor="" className="control-label">
 								Name
 							</label>
-							<input className="form-control" id="name" name="name" value={this.state.name} onChange={this.handleInputChange} />
+							<input className="form-control" id="name" name="dealershipName" value={this.state.data.dealershipName} onChange={this.handleInputChange} />
 							<span className="error-text">{this.state.err.name}</span>
 						</div>
 
@@ -95,19 +91,26 @@ class EditCarStand extends Component{
 							<label htmlFor="" className="control-label">
 								State
 							</label>
-							<select className="form-control" id="state" value={this.state.stateId} onChange={this.handleInputChange} name="stateId">
+							<select className="form-control" id="state" value={this.state.data.stateId} onChange={this.handleInputChange} name="stateId">
 							<option disabled value="">{this.state.requestingStates?'loading...':'Select a state'}</option>
 							{this.state.receivedStates.map((item,index)=><option value={item.stateId} key={++index}>{item.name}</option>)}
 							
 						  </select>
 							<span className="error-text">{this.state.err.state}</span>
 						</div>
-						<div className={this.state.err.location.length > 0?"has-error form-group":"form-group"}>
+						<div className={this.state.err.contactName.length > 0?"has-error form-group":"form-group"}>
 							<label htmlFor="" className="control-label">
-								Location
+								Contact Name
 							</label>
-							<input className="form-control" id="location" name="location" value={this.state.location} onChange={this.handleInputChange}/>
-							<span className="error-text">{this.state.err.location}</span>
+							<input className="form-control" id="contactName" name="contactName" value={this.state.data.contactName} onChange={this.handleInputChange}/>
+							<span className="error-text">{this.state.err.contactName}</span>
+						</div>
+                        <div className={this.state.err.contactNumber.length > 0?"has-error form-group":"form-group"}>
+							<label htmlFor="" className="control-label">
+								Contact Phone
+							</label>
+							<input className="form-control" id="contactNumber" name="contactNumber" value={this.state.data.contactNumber} onChange={this.handleInputChange}/>
+							<span className="error-text">{this.state.err.contactNumber}</span>
 						</div>
 
 						<div className="form-actions mt-10">
@@ -127,4 +130,4 @@ class EditCarStand extends Component{
 	}
 }
 
-export default EditCarStand;
+export default EditDealer;

@@ -36,28 +36,34 @@ class CreateVehicles extends Component{
 	}
 
 	submit(){
+		this.setState({sending:true});
+		let data;
 		this.props.validatorAll([
 				{name:'standId',value:this.state.standId},{name:'isSold',value:this.state.isSold},
 				{name:'vin',value:this.state.vin},{name:'manufacturer',value:this.state.manufacturer},
 				{name:'model',value:this.state.model},{name:'modelYear',value:this.state.modelYear},
 				{name:'color',value:this.state.color},{name:'bodyType',value:this.state.bodyType},
-				{name:'registered',value:this.state.registered},{name:'regNo',value:this.state.regNo}],
+				{name:'registered',value:this.state.registered},{name:'regNo',value:parseInt(this.state.registered) === 1?this.state.regNo:'hhhhhhh'}],
 				'Vehicle',this)
 		if (this.state.err.all.size > 0) {
-            // this.setState({sending:false,disabled:false})
+            this.setState({sending:false});
             return;
         }
 		this.props.startRequest.call(this);
 		const {VEHICLE,CREATE}=this.props.Constants;
 		const {vin,manufacturer,model,modelYear,color,bodyType,registered,regNo,standId,isSold} = this.state;
-		const data ={standId,isSold: isSold=== 'true'?true:false,VIN:vin,manufacturer,model,modelYear,color,bodyType,isRegistered:registered ==="true"?true:false,regNo}
-
+		 data ={standId,isSold: isSold=== '1'?true:false,VIN:vin,manufacturer,model,modelYear,color,bodyType,isRegistered:registered ==="1"?true:false,regNo}
+		if (parseInt(this.state.registered) === 0) {
+			data ={standId,isSold: isSold=== '1'?true:false,VIN:vin,manufacturer,model,modelYear,color,bodyType,isRegistered:registered ==="1"?true:false}
+		}
 		this.props.ServiceObj.createItem(data,VEHICLE,CREATE)
 		.then(({data})=>{
 			this.props.successRequest.call(this,"vehicle created.");
+			this.setState({sending:false});
 			this.clear.call(this)
 		})
 		.catch(err=>{
+			this.setState({sending:false});
 			this.props.failedRequest.call(this,"vehicle not created.");
 		
 		})
@@ -131,29 +137,33 @@ class CreateVehicles extends Component{
 									    <label className="control-label" >Registered</label>
 									    <select className="form-control" id="registered" value={this.state.registered} onChange={this.handleInputChange} name="registered">
 										<option disabled value="">Select registration status</option>
-									      <option value={true}>Yes</option>
-									      <option value={false}>No</option>
+										<option value="1" >Yes</option>
+										<option value="0">No</option>
 									    </select>
 									    <span className="error-text">{this.state.err.registered}</span>
 									 </div>
-									 <div className={this.state.err.isSold.length >0?"has-error form-group":"form-group"}>
+									
+									 {
+										parseInt(this.state.registered) === 1 && 
+										<div className={this.state.err.regNo.length > 0 ? "has-error form-group" : "form-group"}>
+											<label htmlFor="" className="control-label">
+												Reg No
+										 </label>
+											<input className="form-control" id="regNo" name="regNo" value={this.state.regNo} onChange={this.handleInputChange} />
+											<span className="error-text">{this.state.err.regNo}</span>
+										</div>
+									 }
+									<div className={this.state.err.isSold.length >0?"has-error form-group":"form-group"}>
 									    <label className="control-label" >Sold</label>
 									    <select className="form-control" id="isSold" value={this.state.isSold} onChange={this.handleInputChange} name="isSold">
 										<option disabled value="">Select a sales status</option>
-									      <option value={true}>Yes</option>
-									      <option value={false}>No</option>
+										<option value="1" >Yes</option>
+										<option value="0">No</option>
 									    </select>
 									    <span className="error-text">{this.state.err.isSold}</span>
 									 </div>
-									 <div className={this.state.err.regNo.length >0?"has-error form-group":"form-group"}>
-										<label htmlFor="" className="control-label">
-											Reg No
-										</label>
-										<input className="form-control" id="regNo" name="regNo" value={this.state.regNo}  onChange={this.handleInputChange} />
-										<span className="error-text">{this.state.err.regNo}</span>
-									</div>
 									<div className="form-actions mt-10">
-										<button type="button" className="btn btn-success  mr-10" disabled={this.state.disabled || this.state.err.all.size > 0} onClick={this.submit}> Submit</button>
+										<button type="button" className="btn btn-success  mr-10" disabled={this.state.disabled || this.state.err.all.size > 0} onClick={this.submit}>{this.state.sending?'Sending...':'Submit'}</button>
 										<button type="button" className="btn btn-default" onClick={this.clear}>Cancel</button>
 									</div>
 								</form>
