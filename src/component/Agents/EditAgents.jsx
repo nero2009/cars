@@ -1,47 +1,60 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 
-class EditAgents extends Component{
-constructor(props) {
+class CreateAgents extends Component{
+	constructor(props) {
 		super(props);
 		this.handleInputChange=this.handleInputChange.bind(this);
 		this.submit=this.submit.bind(this);
 		this.clear=this.clear.bind(this);
-		this.state={name:'',dealershipName:'',contactName:'',phone:'', stateId:'',receivedStates:[],
-		err:{dealershipName:'',contactName:'',phone:'',state:'',all: new Set(), disabled:false} }
+		this.state={data:{fullName:'',email:'',contactNo:'',allowMobile:''},receivedStates:[],
+		err:{fullName:'',allowMobile:'',email:'',contactNo:'',all: new Set()},
+		disabled:false,submitBtn:this.props.submitBtn
+		}
 	}
 
 	componentDidMount() {
-		this.setState({receivedStates:[{Id:1,Name:'Lagos'},{Id:2,Name:'Edo'}]})
-		const recievedData={name:'foo foo',dealershipName:'Goody',contact:'Yaba',phone:'345930', stateId:1};
-		this.setState({recievedData,name:recievedData.name,stateId:recievedData.stateId,dealershipName:recievedData.dealershipName,contact:recievedData.contact
-		,phone:recievedData.phone});
+		const id=this.props.match.params.id;
+		const {GET,SALESPEOPLE}=this.props.Constants;
+		this.props.ServiceObj.getItem(SALESPEOPLE,GET,id)
+		.then(({data})=>{
+			this.setState({data:{...data},receivedData:{...data}});
+		})
+		.catch(err=>{
+
+		})
 	}
 
 	handleInputChange(e){
-		this.setState({[e.target.name]:e.target.value})
-		this.props.validator({name:e.target.id,value:e.target.value},'agents',this);
+		this.setState({data:{...this.state.data,[e.target.name]:e.target.value}});
+		this.props.validator({name:e.target.id,value:e.target.value},'agent',this);
         return;
 	}
-	
 
 	clear(){
-		this.setState({name:this.state.recievedData.name,dealershipName:this.state.recievedData.dealershipName,
-			contact:this.state.recievedData.contact,phone:this.state.recievedData.phone,stateId:this.state.recievedData.stateId})
+		this.setState({data:{fullName:'',email:'',contactNo:'',allowMobile:''}})
 	}
 
 	submit(){
-		this.props.validatorAll([{name:'dealershipName',value:this.state.dealershipName},
-			{name:'contact',value:this.state.contactName},{name:"state",value:this.state.stateId},{name:"phone",value:this.state.phone}],
-			'agents',this);
+		this.props.validatorAll([{name:'fullName',value:this.state.data.fullName},
+			{name:'contactNo',value:this.state.data.contactNo},{name:"email",value:this.state.data.email},{name:"allowMobile",value:this.state.data.allowMobile}],
+			'agent',this);
 		if (this.state.err.all.size > 0) {
             // this.setState({sending:false,disabled:false})
             return;
         }
 		this.props.startRequest.call(this);
-		const {name,dealershipName,contactName,phone,stateId} = this.state;
-		const data ={name,dealershipName,contactName,phone,stateId}
-		this.props.failedRequest.call(this,"Agent not created.");
+		const {data}=this.state;
+		const {SALESPEOPLE,UPDATE}=this.props.Constants;
+		this.props.ServiceObj.createItem({...data},SALESPEOPLE,UPDATE)
+		.then(({data})=>{
+			this.props.successRequest.call(this,"Agent updated.");
+			setTimeout(() => this.props.history.goBack(), 0);
+		})
+		.catch(err=>{
+			this.props.failedRequest.call(this,"Agent not updated.");
+		
+		})
 	}
 
 
@@ -57,43 +70,43 @@ constructor(props) {
 						<div className="panel-wrapper collapse in">
 							<div className="panel-body">
 								<form >
-									<div className={this.state.err.dealershipName.length > 0?"has-error form-group":"form-group"}>
+									<div className={this.state.err.fullName.length > 0?"has-error form-group":"form-group"}>
 										<label htmlFor="" className="control-label">
-											Dealership Name
+											Name
 										</label>
-										<input className="form-control" name="dealershipName" id="dealershipName" value={this.state.dealershipName} onChange={this.handleInputChange} />
-										<span className="error-text">{this.state.err.dealershipName}</span>
+										<input className="form-control" name="fullName" id="fullName" value={this.state.data.fullName} onChange={this.handleInputChange} />
+										<span className="error-text">{this.state.err.fullName}</span>
 									</div>
-									<div className={this.state.err.contactName.length > 0?"has-error form-group":"form-group"}>
+									<div className={this.state.err.email.length > 0?"has-error form-group":"form-group"}>
 										<label htmlFor="" className="control-label">
-											Contact Name
+											Email
 										</label>
-										<input className="form-control" name="contactName" id="contactName" value={this.state.contactName} onChange={this.handleInputChange} />
-										<span className="error-text">{this.state.err.contactName}</span>
+										<input className="form-control" type="email" name="email" id="email" value={this.state.data.email} onChange={this.handleInputChange} />
+										<span className="error-text">{this.state.err.email}</span>
 									</div>
 									
 									
-									<div className={this.state.err.phone.length > 0?"has-error form-group":"form-group"}>
+									<div className={this.state.err.contactNo.length > 0?"has-error form-group":"form-group"}>
 										<label htmlFor="" className="control-label">
-											Phone No
+											Contact Number
 										</label>
-										<input className="form-control" name="phone" id="phone" value={this.state.phone} onChange={this.handleInputChange} />
-										<span className="error-text">{this.state.err.phone}</span>
+										<input className="form-control" name="contactNo" id="contactNo" value={this.state.data.contactNo} onChange={this.handleInputChange} />
+										<span className="error-text">{this.state.err.contactNo}</span>
 									</div>
-									<div className={this.state.err.state.length > 0?"has-error form-group":"form-group"}>
-										<label htmlFor="" className="control-label">
-											State
-										</label>
-										<select className="form-control" id="state" value={this.state.stateId} onChange={this.handleInputChange} name="stateId">
-										  <option disabled value="">Select a state</option>
-										  {this.state.receivedStates.map((item,index)=><option value={item.Id} key={++index}>{item.Name}</option>)}
-										  
-										</select>
-										<span className="error-text">{this.state.err.state}</span>
-									</div>
+
+									<div className={this.state.err.allowMobile.length >0?"has-error form-group":"form-group"}>
+									    <label className="control-label" >allow Mobile</label>
+									    <select className="form-control" id="allowMobile" value={this.state.data.allowMobile} onChange={this.handleInputChange} name="allowMobile">
+										<option disabled value="">Select</option>
+										<option value="1" >Yes</option>
+										<option value="0">No</option>
+									    </select>
+									    <span className="error-text">{this.state.err.allowMobile}</span>
+									 </div>
+									
 									
 									<div className="form-actions mt-10">
-										<button type="button" className="btn btn-success  mr-10" onClick={this.submit} disabled={this.state.disabled || this.state.err.all.size > 0}> Submit</button>
+										<button type="button" className="btn btn-success  mr-10" onClick={this.submit} disabled={this.state.disabled || this.state.err.all.size > 0}> {this.state.submitBtn}</button>
 										<button type="button" className="btn btn-default" onClick={this.clear}>Cancel</button>
 									</div>
 								</form>
@@ -107,4 +120,4 @@ constructor(props) {
 	}
 }
 
-export default EditAgents;
+export default CreateAgents;

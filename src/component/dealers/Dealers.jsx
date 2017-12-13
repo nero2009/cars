@@ -21,8 +21,7 @@ class Dealers extends Component{
 		})
 
 		this.setState({
-			header:['#','Name','Contact Name',"Contact Phone","Actions"],
-			rows:[{no:1,name:'gaga motors',stateName:'Lagos',Location:'Ajah',action:<Link to="#"><i className="fa fa-pencil"></i></Link>}]
+			header:['#','Name','Contact Name',"Contact Phone","Actions"]
 		})
 	}
 	onChangePage(pageOfItems,pager){

@@ -9,6 +9,11 @@ body {
 .blue-text{
   color:#1DA1F2 !important
 }
+.alert-d{
+  border-color: #d11835 !important;
+  background: #d11835 !important; 
+  color:white !important;
+}
 .panel-heading2{
   border-bottom: 1px !important;
   border-bottom-color: #ddd !important;

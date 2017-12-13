@@ -24,8 +24,8 @@ export const failedRequest=function(message){
         });
 }
 
-export const startRequest=function(){
-		this.setState({submitBtn:this.props.LoaderButton,disabled:true});
+export const startRequest = function () {
+	this.setState({ submitBtn: this.props.LoaderButton, disabled: true });
 }
 
 export const validatorAll=(fields,controller,obj)=>{
@@ -221,8 +221,11 @@ export const validationRules={
 	balance:['required','number'],
 	standId:['required'],
 	isSold:['required'],
+	allowMobile:['required'],
 	contactName:['required','string','min:6'],
-	contactNumber:['required','phoneNumber']
+	contactNumber:['required','phoneNumber'],
+	contactNo:['required','phoneNumber'],
+	fullName:['required','string','min:10'],
 
 }
 
@@ -262,7 +265,8 @@ export const getErrorMsg=(error,name,controller=null)=>{
 	}
 
 	if (error === 'required') {
-		return `Please provide ${a} ${controller} ${name}`;
+		//return `Please provide ${a} ${controller} ${name}`;
+		return "This field is required"
 	}
 	if (error === 'number') {
 		return `Please provide a valid number`;

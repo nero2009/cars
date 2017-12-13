@@ -1,39 +1,66 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {Table} from '../tables/Table.jsx'
+import Pagination from '../pagination/Pagination.jsx' 
 
 class ViewAgents extends Component{
 	constructor(props) {
 		super(props);
-		this.state = {header:[],rows:[]}
+		this.state={header:[],rows:[],data:[],pageOfItems:[],pager:{}}
 	}
 
 	componentDidMount() {
-		this.setState({
-			header:['#','Dealership Name','Contact name','Contact No','State',<i className="fa fa-gear"></i>],
-			rows:[{no:1,dealershipName:'global inc',contact:'surulere',Phone:234,stateName:'Lagos',action:<Link to="#"><i className="fa fa-pencil"></i></Link>}]
+		const {GETUSERAGENTS,DEALERS} = this.props.Constants;
+		this.props.ServiceObj.getItem(DEALERS,GETUSERAGENTS,this.props.user.id)
+		.then(({data})=>{
+			this.setState({data:data || []});
 		})
+		.catch(err=>{
+
+		})
+		this.setState({
+			header:['#','Name',"Email",'Contact No','Mobile User',<i className="fa fa-gear"></i>]
+		})
+	}
+	onChangePage(pageOfItems,pager){
+		this.setState({pageOfItems,pager});
+	}
+	format(data){
+		return  data.map((item,index)=>{
+				return{
+					SN:item.no,
+					Name:item.fullName,
+					Email:item.email,
+					contactNo:item.contactNo,
+					allowMobile:item.allowMobile?'Yes':'No',
+					Actions:<Link to={`/home/agents/edit/${item.Id}`} className="mr-15 btn btn-info"><i className="fa fa-pencil"></i></Link>
+					
+					
+				}
+			})
+	
 	}
 
 	render(){
 		return(
 			<div>
 				<div className="panel panel-default card-view">
-							<div className="panel-heading">
-							<div className="pull-left">
-									<h6 className="panel-title txt-dark">Agents</h6>
-								</div>
+					<div className="panel-heading">
+						<div className="pull-left">
+							<h6 className="panel-title txt-dark">Agents</h6>
+						</div>
+						<div className="clearfix"></div>
+					</div>
+					<div className="panel-wrapper collapse in">
+						<div className="panel-body">
+							<div className="table-wrap">
+								<Table headers={this.state.header} rows={this.format.call(this, this.state.pageOfItems)} />
 								<div className="clearfix"></div>
 							</div>
-							<div className="panel-wrapper collapse in">
-								<div className="panel-body">
-									<div className="table-wrap">
-										<Table headers={this.state.header} rows={this.state.rows}/>
-										<div className="clearfix"></div>
-									</div>	
-								</div>	
-							</div>	
+							<Pagination items={this.state.data} onChangePage={this.onChangePage.bind(this)} />
 						</div>
+					</div>
+				</div>
 			</div>
 			);
 	}

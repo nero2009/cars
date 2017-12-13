@@ -7,6 +7,16 @@ class DashboardIndex extends Component{
 		super(props);
 		this.state={};
 	}
+	componentWillMount(){
+		if (window.location.hash === "#home") {
+			window.location.hash="";
+			 const newLinkArr=window.location.href.split('');
+			 newLinkArr.pop();
+			 const newLink=newLinkArr.join('');
+			 window.location.href=newLink;
+			//window.location.reload();
+		  } 
+	}
 	componentDidMount(){
 		/*Dashboard2 Init*/
 		"use strict"; 

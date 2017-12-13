@@ -126,14 +126,15 @@ class Authorized extends Component{
 							<Switch>
 							<Route path={this.props.match.path} exact render={(props)=>(<DashboardIndex {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)} />
 							 <Route path={`${this.props.match.path}/car-stand`} exact render={(props)=>(<CarStand {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							 <Route path={`${this.props.match.path}/car-stand/create`}   render={(props)=>(<CreateCarStand {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 							 <Route path={`${this.props.match.path}/car-stand/:id`} exact render={(props)=>(<CarStandView {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 							
 							<Route path={`${this.props.match.path}/car-stand/edit/:id`}  render={(props)=>(<EditCarStand {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
-							<Route path={`${this.props.match.path}/create-car-stand`}   render={(props)=>(<CreateCarStand {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 							
-							<Route path={`${this.props.match.path}/create-agents`} render={(props)=>(<CreateAgents {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
-							<Route path={`${this.props.match.path}/edit-agents/:id`} render={(props)=>(<EditAgents {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
-							<Route path={`${this.props.match.path}/view-agents`} render={(props)=>(<ViewAgents {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							
+							<Route path={`${this.props.match.path}/agents/create`} render={(props)=>(<CreateAgents {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							<Route path={`${this.props.match.path}/agents/edit/:id`} render={(props)=>(<EditAgents {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							<Route path={`${this.props.match.path}/agents`} exact render={(props)=>(<ViewAgents {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 
 							<Route path={`${this.props.match.path}/dealers`} exact render={(props)=>(<Dealer {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 							<Route path={`${this.props.match.path}/dealers/edit/:id`}  render={(props)=>(<EditDealer {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
@@ -147,7 +148,7 @@ class Authorized extends Component{
 							<Route path={`${this.props.match.path}/vehicles/create`}  render={(props)=>(<CreateVehicles {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 							<Route path={`${this.props.match.path}/vehicles/edit/:id`}  render={(props)=>(<EditVehicles {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 							<Route path={`${this.props.match.path}/vehicles`} exact  render={(props)=>(<ViewVehicles {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
-							<Route path={`${this.props.match.path}/edit-vehicle/:id`}  render={(props)=>(<EditVehicles {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							
 							<Route path={`${this.props.match.path}/dashboard`}  render={(props)=>(<DashboardIndex {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 							<Redirect to="/" />
 						 </Switch>

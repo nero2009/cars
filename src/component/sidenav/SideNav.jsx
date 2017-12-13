@@ -40,7 +40,7 @@ class SideNav extends Component{
 							<Link  to="/home/car-stand">Car Stand List</Link>
 						</li>
 						<li>
-							<Link  to="/home/create-car-stand">Add New</Link>
+							<Link  to="/home/car-stand/create">Add New</Link>
 						</li>
 					</ul>
 				</li>
@@ -67,10 +67,10 @@ class SideNav extends Component{
 					<a href="javascript:void(0);" data-toggle="collapse" data-target="#app_dr"><div className="pull-left"><i className="zmdi zmdi-male-female mr-20"></i><span className="right-nav-text">Agents </span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
 					<ul id="app_dr" className="collapse collapse-level-1">
 						<li>
-							<Link to="/home/view-agents">Agent List</Link>
+							<Link to="/home/agents">Agent List</Link>
 						</li>
 						<li>
-						<Link to="/home/create-agents">Add New</Link>
+						<Link to="/home/agents/create">Add New</Link>
 						</li>
 					</ul>
 				</li>

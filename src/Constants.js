@@ -1,5 +1,5 @@
 export const LOGINURL = 'common/login'
-export const BASEURI='http://api-carfacts.camstill.com/public/index.php/api/'
+export const BASEURI='http://localhost/laolu/dmsserver/public/api/'
 //"http://api-carfacts.camstill.com/public/index.php/api/"
 //'http://localhost/laolu/dmsserver/public/api/'
 
@@ -22,3 +22,6 @@ export const GETVEHICLESNOTSOLD="getVehiclesNotSold";
 export const DEALERS="dealers";
 export const GETCARSTANDS="getCarStands";
 export const GETAGENTS="getAgents";
+export const SALESPEOPLE="salespeople";
+export const CREATEWITHDEALERUSER="createWithDealerUser";
+export const GETUSERAGENTS="getUserAgents";

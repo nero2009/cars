@@ -17,6 +17,7 @@ class Unauthorized extends Component{
 	constructor(props){
 			super(props);
 			this.state = {
+				showEror:false,
 				isSignedIn:true,
 				email:'',password:'',submitButton:'Login',isSuccessful:false,failed:false,err:{email:'',password:'',all: new Set(), disabled:false}
 			}
@@ -27,7 +28,7 @@ class Unauthorized extends Component{
 		localforage.getItem(USERKEY)
 		.then((user)=>{
 			if (user && user.token) {
-				this.props.history.push('/home/dashboard')
+				this.props.history.push('/home/dashboard#home')
 				return;
 			}
 			this.setState({isSignedIn:false})
@@ -45,7 +46,13 @@ class Unauthorized extends Component{
 		return;
 	}
 	handleInputChange(e){
-		this.setState({[e.target.name]:e.target.value})
+		this.setState({[e.target.name]:e.target.value});
+		if (this.state.showEror) {
+			this.setState((prevState, props)=>{
+				return {showEror: !prevState.showEror}
+			 })
+		}
+		
 		validator({name:e.target.id,value:e.target.value},'Login',this);
         return;
 	}
@@ -65,11 +72,19 @@ class Unauthorized extends Component{
 			return localforage.setItem(USERKEY,res.data);
 		})
 		.then( ()=> {
-			this.props.history.push('/home/dashboard')
+			this.props.history.push('/home/dashboard#home')
 		})
 		.catch(err=>{
-			console.log(err.response);
-			failedRequest.call(this,"Login Unsuccessful");
+			this.setState({submitButton: 'Login'});
+			//console.log(err.response);
+			//failedRequest.call(this,"Login Unsuccessful");
+			this.setState((prevState, props)=>{
+				return {showEror: !prevState.showEror}
+			 })
+
+			// setTimeout(()=>this.setState((prevState, props)=>{
+			// 	return {showEror: !prevState.showEror}
+			//  }),3000) 
 		})
 		
 	}
@@ -97,7 +112,7 @@ class Unauthorized extends Component{
 											</a>
 										</div>
 										<div className="col-xs-9 col-sm-10 text-right">
-											<a href="#" className="hamburger-toggle" data-toggle-className="#menu1;hidden-xs">
+											<a href="#" className="hamburger-toggle" data-toggle-class="#menu1;hidden-xs">
 												<i className="icon icon--sm stack-interface stack-menu"></i>
 											</a>
 										</div>
@@ -189,6 +204,12 @@ class Unauthorized extends Component{
 												</div>
 												
 											</form>
+											
+												<div className="alert alert-danger alert-d mt--1" style={{display:this.state.showEror?'block':'none'}}>
+													Invalid username or password.
+											    </div>
+											
+											
 											<span className="type--fine-print block">Dont have an account yet?
 												<a href="register.html">Create account</a>
 											</span>
