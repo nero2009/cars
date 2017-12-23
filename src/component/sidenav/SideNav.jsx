@@ -75,6 +75,17 @@ class SideNav extends Component{
 					</ul>
 				</li>
 				<li>
+					<a href="javascript:void(0);" data-toggle="collapse" data-target="#app_cs"><div className="pull-left"><i className="zmdi zmdi-male-female mr-20"></i><span className="right-nav-text">Customers </span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
+					<ul id="app_cs" className="collapse collapse-level-1">
+						<li>
+							<Link to="/home/customer">Customer List</Link>
+						</li>
+						<li>
+						<Link to="/home/customer/create">Add New</Link>
+						</li>
+					</ul>
+				</li>
+				<li>
 					<a href="javascript:void(0);" data-toggle="collapse" data-target="#sales_dr"><div className="pull-left"><i className="zmdi zmdi-shopping-cart mr-20"></i><span className="right-nav-text">Sales</span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
 					<ul id="sales_dr" className="collapse collapse-level-1">
 						<li>

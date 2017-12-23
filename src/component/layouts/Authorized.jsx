@@ -24,6 +24,11 @@ import CarStandView from '../carstand/CarStandView.jsx'
 import Dealer from '../dealers/Dealers.jsx'
 import EditDealer from '../dealers/EditDealer.jsx'
 import DealerView from '../dealers/DealersView.jsx'
+
+import CreateCustomer from '../customers/CreateCustomer.jsx'
+import Customers from '../customers/Customer.jsx'
+import EditCustomer from '../customers/EditCustomer.jsx'
+
 import {Link,Route,Switch,Redirect} from 'react-router-dom'
 import localforage from 'localforage'
 import Preloader from '../loaders/Preloader.jsx'
@@ -128,10 +133,12 @@ class Authorized extends Component{
 							 <Route path={`${this.props.match.path}/car-stand`} exact render={(props)=>(<CarStand {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 							 <Route path={`${this.props.match.path}/car-stand/create`}   render={(props)=>(<CreateCarStand {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 							 <Route path={`${this.props.match.path}/car-stand/:id`} exact render={(props)=>(<CarStandView {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
-							
-							<Route path={`${this.props.match.path}/car-stand/edit/:id`}  render={(props)=>(<EditCarStand {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
-							
-							
+							 <Route path={`${this.props.match.path}/car-stand/edit/:id`}  render={(props)=>(<EditCarStand {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+
+							<Route path={`${this.props.match.path}/customer/create`}   render={(props)=>(<CreateCustomer {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							<Route path={`${this.props.match.path}/customer`} exact render={(props)=>(<Customers {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							<Route path={`${this.props.match.path}/customer/edit/:id`}  render={(props)=>(<EditCustomer {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+
 							<Route path={`${this.props.match.path}/agents/create`} render={(props)=>(<CreateAgents {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 							<Route path={`${this.props.match.path}/agents/edit/:id`} render={(props)=>(<EditAgents {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 							<Route path={`${this.props.match.path}/agents`} exact render={(props)=>(<ViewAgents {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>

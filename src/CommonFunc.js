@@ -226,6 +226,8 @@ export const validationRules={
 	contactNumber:['required','phoneNumber'],
 	contactNo:['required','phoneNumber'],
 	fullName:['required','string','min:10'],
+	address:['required','string'],
+	otherName:['min:3','max:20','string'],
 
 }
 
@@ -279,7 +281,8 @@ export const getErrorMsg=(error,name,controller=null)=>{
 
 	if (error.substr(0,3) ==='min') {
 		const len=error.substr(4);
-		return `The minimum length for the ${controller} ${name} is ${len}`;
+		return `The minimum length of this field is ${len}`;
+		//`The minimum length for the ${controller} ${name} is ${len}`;
 	}
 
 	if (error === 'string') {
