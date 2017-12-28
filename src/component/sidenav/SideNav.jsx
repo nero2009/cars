@@ -37,7 +37,7 @@ class SideNav extends Component{
 					<a href="javascript:void(0);" data-toggle="collapse" data-target="#d_dr"><div className="pull-left"><i className="zmdi zmdi-car-wash mr-20"></i><span className="right-nav-text">Car Stand</span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
 					<ul id="d_dr" className="collapse collapse-level-1">
 						<li>
-							<Link  to="/home/car-stand">Car Stand List</Link>
+							<Link  to="/home/car-stand">List</Link>
 						</li>
 						<li>
 							<Link  to="/home/car-stand/create">Add New</Link>
@@ -45,18 +45,18 @@ class SideNav extends Component{
 					</ul>
 				</li>
 				<li>
-					<a href="javascript:void(0);" data-toggle="collapse" data-target="#dashboard_dr"><div className="pull-left"><i className="zmdi zmdi-car-wash mr-20"></i><span className="right-nav-text">Dealers</span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
+					<a href="javascript:void(0);" data-toggle="collapse" data-target="#dashboard_dr"><div className="pull-left"><i className="zmdi zmdi-sun mr-20"></i><span className="right-nav-text">Dealers</span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
 					<ul id="dashboard_dr" className="collapse collapse-level-1">
 						<li>
-							<Link  to="/home/dealers">Car Stand List</Link>
+							<Link  to="/home/dealers">List</Link>
 						</li>
 					</ul>
 				</li>
 				<li>
-					<a className="active" href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div className="pull-left"><i className="zmdi zmdi-car mr-20"></i><span className="right-nav-text">Vehicles</span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
+					<a href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div className="pull-left"><i className="zmdi zmdi-car mr-20"></i><span className="right-nav-text">Vehicles</span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
 					<ul id="ecom_dr" className="collapse collapse-level-1">
 						<li>
-							<Link to="/home/vehicles">Vehicle List</Link>
+							<Link to="/home/vehicles">List</Link>
 						</li>
 						<li>
 							<Link to="/home/vehicles/create">Add New</Link>
@@ -64,10 +64,10 @@ class SideNav extends Component{
 					</ul>
 				</li>
 				<li>
-					<a href="javascript:void(0);" data-toggle="collapse" data-target="#app_dr"><div className="pull-left"><i className="zmdi zmdi-male-female mr-20"></i><span className="right-nav-text">Agents </span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
+							<a href="javascript:void(0);" data-toggle="collapse" data-target="#app_dr"><div className="pull-left"><i className="zmdi zmdi-face mr-20"></i><span className="right-nav-text">Agents </span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
 					<ul id="app_dr" className="collapse collapse-level-1">
 						<li>
-							<Link to="/home/agents">Agent List</Link>
+							<Link to="/home/agents">List</Link>
 						</li>
 						<li>
 						<Link to="/home/agents/create">Add New</Link>
@@ -78,7 +78,7 @@ class SideNav extends Component{
 					<a href="javascript:void(0);" data-toggle="collapse" data-target="#app_cs"><div className="pull-left"><i className="zmdi zmdi-male-female mr-20"></i><span className="right-nav-text">Customers </span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
 					<ul id="app_cs" className="collapse collapse-level-1">
 						<li>
-							<Link to="/home/customer">Customer List</Link>
+							<Link to="/home/customer">List</Link>
 						</li>
 						<li>
 						<Link to="/home/customer/create">Add New</Link>
@@ -100,7 +100,10 @@ class SideNav extends Component{
 					<a href="javascript:void(0);" data-toggle="collapse" data-target="#message_dr"><div className="pull-left"><i className="zmdi zmdi-email mr-20"></i><span className="right-nav-text">Message(s)</span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
 					<ul id="message_dr" className="collapse collapse-level-1">
 						<li>
-							<Link  to="/home/view-message">View all messages</Link>
+							<Link  to="/home/view-message">Inbox</Link>
+						</li>
+						<li>
+							<Link to="/home/sent-messages">Sent</Link>
 						</li>
 						<li>
 							<Link  to="/home/create-message">Create message</Link>

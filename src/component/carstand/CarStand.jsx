@@ -67,7 +67,7 @@ class CarStand extends Component{
 						</div>
 			
 			</div>
-			)
+		)
 	}
 }
 

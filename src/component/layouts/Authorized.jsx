@@ -30,10 +30,10 @@ import Customers from '../customers/Customer.jsx'
 import EditCustomer from '../customers/EditCustomer.jsx'
 
 import {Link,Route,Switch,Redirect} from 'react-router-dom'
+import Axios from 'axios'
 import localforage from 'localforage'
 import Preloader from '../loaders/Preloader.jsx'
 import  {BASEURI,TOKENKEY, USERKEY} from '../../Constants'
-import Axios from 'axios'
 import {Service} from '../../Service'
 import {failedRequest,startRequest,successRequest,validatorAll,validator} from '../../CommonFunc'
 import swal from 'sweetalert';

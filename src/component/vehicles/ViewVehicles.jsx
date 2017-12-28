@@ -19,7 +19,7 @@ class ViewVehicles extends Component{
 
 		})
 		this.setState({
-			header:['#','vin','manufacturer','model','modelYear','color','bodyType','registered','regNo',<i className="fa fa-gear"></i>],
+			header: ['#', 'manufacturer', 'model', 'modelYear', 'color', 'bodyType', 'registered', 'sold',<i className="fa fa-gear"></i>],
 			rows:[{no:1,vin:'drt455HQ',manufacturer:'Ford',model:'Ranger',modelYear:'2017',color:'black',bodyType:'muscle',registered:'yes',regNo:'10092hq',action:<Link to="#"><i className="fa fa-pencil"></i></Link>}]
 		})
 	}
@@ -30,16 +30,16 @@ class ViewVehicles extends Component{
 		return  data.map((item,index)=>{
 				return{
 					SN:item.no,
-					Vin:item.vin,
 					Manufacturer:item.manufacturer,
 					Model:item.model,
 					ModelYear:item.modelYear,
 					Color:item.color,
 					BodyType:item.bodyType,
-					Registered:item.isRegistered?'Yes':'No',
-					RegNo:item.regNo,
-					Actions:<Link to={`/home/vehicles/edit/${item.Id}`}><i className="fa fa-pencil"></i></Link>
-					
+					Registered: item.isRegistered ? 'Yes' : 'No',
+					Sold:item.isSold?'Yes':'No',
+					Actions: <div><Link to={`/home/vehicles/edit/${item.Id}`} className="mr-15 btn btn-info"><i className="fa fa-pencil"></i></Link>
+						<Link to={`/home/sales/saleVehicle/${item.vehicleId}`} className="mr-15 btn btn-info"	><i className="fa fa-money"></i></Link>
+					</div>
 				}
 			})
 	

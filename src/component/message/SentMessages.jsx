@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom';
 import { Table } from '../tables/Table.jsx'
 import Pagination from '../pagination/Pagination.jsx' 
 
-class ViewMessages extends Component{
+class SentMessages extends Component{
 	constructor(props) {
 		super(props);
 		this.state = { header: [], rows: [], data: [], pageOfItems: [], pager: {}}
 	}
 
 	componentDidMount() {
-		const { GETUSERMESSAGES, MESSAGES } = this.props.Constants;
+		const { GETSENTMESSAGES, MESSAGES } = this.props.Constants;
 		const Id = this.props.user.id;
-		this.props.ServiceObj.getItem(MESSAGES, GETUSERMESSAGES, Id)
+		this.props.ServiceObj.getItem(MESSAGES, GETSENTMESSAGES, Id)
 		.then(({ data }) => {
 			this.setState({ data: data || [] });
 		})
@@ -21,8 +21,8 @@ class ViewMessages extends Component{
 		})
 
 		this.setState({
-			header: ['#', 'From', 'Subject', 'Read', 'Actions'],
-			rows: [{ no: 1, from: 'Nero', subject: 'Test Mail', read: <Link to="#"><i className="fa fa-eye"></i></Link>, Actions: <Link to="#"><i className="fa fa-archive"></i></Link>}]
+			header: ['#', 'To', 'Subject', 'Read', 'Actions'],
+			rows: [{ no: 1, to: 'Nero', subject: 'Test Mail', read: <Link to="#"><i className="fa fa-eye"></i></Link>, Actions: <Link to="#"><i className="fa fa-archive"></i></Link>}]
 		})
 	}
 
@@ -33,7 +33,7 @@ class ViewMessages extends Component{
 		return data.map((item, index) => {
 			return {
 				SN: item.no,
-				From: item.from,
+				To: item.to,
 				Subject: item.subject,
 				Read: <Link to={`/home/messages/view/${item.messageId}`} className="mr-15 btn btn-info"><i className="fa fa-eye"></i></Link>,
 				Actions: <Link to={`/home/messages/archive/${item.messageId}`} className="mr-15 btn btn-info"><i className="fa fa-archive"></i></Link>
@@ -67,4 +67,4 @@ class ViewMessages extends Component{
 	}
 }
 
-export default ViewMessages;
+export default SentMessages;
