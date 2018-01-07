@@ -33,10 +33,18 @@ class CreateMessages extends Component{
             // this.setState({sending:false,disabled:false})
             return;
         }
-        this.props.startRequest.call(this);
-		const {to,from,subject,body} = this.state;
-		const data ={to,from,subject,body}
-		this.props.failedRequest.call(this,"Message not created.");
+		this.props.startRequest.call(this);
+		const { data } = this.state;
+		const { MESSAGES, CREATE } = this.props.Constants;
+		this.props.ServiceObj.createItem({ ...data }, MESSAGES, CREATE)
+		.then(({ data }) => {
+			this.props.successRequest.call(this, "Message Sent.");
+			this.clear.call(this)
+		})
+		.catch(err => {
+			this.props.failedRequest.call(this, "Message not Sent.");
+
+		})
 	}
 
 

@@ -19,7 +19,7 @@ class ViewAgents extends Component{
 
 		})
 		this.setState({
-			header:['#','Name',"Email",'Contact No','Mobile User','Actions']
+			header:['#','Name',"Email",'Contact No','Account Status', 'Mobile User','Actions']
 		})
 	}
 	onChangePage(pageOfItems,pager){
@@ -32,6 +32,7 @@ class ViewAgents extends Component{
 					Name: item.get_user_info.name,
 					Email: item.get_user_info.email,
 					contactNo:item.contactNo,
+					Status: item.status ? 'Activated' : 'Not Activated',
 					allowMobile:item.allowMobile?'Yes':'No',
 					Actions:<Link to={`/home/agents/edit/${item.Id}`} className="mr-15 btn btn-info"><i className="fa fa-pencil"></i></Link>
 					
