@@ -195,6 +195,7 @@ export const validationRules={
 	firstName:['required','max:50','string'],
 	lastName:['required','max:50','string'],
 	email:['required','email'],
+	customerEmail:['required','email'],
 	phone:['required','phoneNumber'],
 	filetype:['required'],
 	cpassword:['required','min:8'],
@@ -228,6 +229,8 @@ export const validationRules={
 	fullName:['required','string','min:10'],
 	address:['required','string'],
 	otherName:['min:3','max:20','string'],
+	salesPrice:['required','number'],
+	amountPaid:['required','number']
 
 }
 

@@ -1,10 +1,19 @@
 {
+<<<<<<< HEAD
   "main.css": "static/css/main.369be1c1.css",
   "main.css.map": "static/css/main.369be1c1.css.map",
   "main.js": "static/js/main.ec3aa126.js",
   "main.js.map": "static/js/main.ec3aa126.js.map",
   "static/js/0.c293c08d.chunk.js": "static/js/0.c293c08d.chunk.js",
   "static/js/0.c293c08d.chunk.js.map": "static/js/0.c293c08d.chunk.js.map",
+=======
+  "main.css": "static/css/main.a8052de4.css",
+  "main.css.map": "static/css/main.a8052de4.css.map",
+  "main.js": "static/js/main.323e87a1.js",
+  "main.js.map": "static/js/main.323e87a1.js.map",
+  "static/js/0.0031343a.chunk.js": "static/js/0.0031343a.chunk.js",
+  "static/js/0.0031343a.chunk.js.map": "static/js/0.0031343a.chunk.js.map",
+>>>>>>> 72409188c3b5d2d3b931aecc84a98b5b17be78b3
   "static\\media\\glyphicons-halflings-regular.eot": "static/media/glyphicons-halflings-regular.f4769f9b.eot",
   "static\\media\\glyphicons-halflings-regular.svg": "static/media/glyphicons-halflings-regular.f7214668.svg",
   "static\\media\\glyphicons-halflings-regular.ttf": "static/media/glyphicons-halflings-regular.e18bbf61.ttf",
