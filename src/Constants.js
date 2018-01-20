@@ -29,6 +29,7 @@ export const SALESPEOPLE="salespeople";
 export const CREATEWITHDEALERUSER="createWithDealerUser";
 export const GETUSERAGENTS="getUserAgents";
 export const CUSTOMERS="customers";
+export const GETCUSTOMERS = "getCustomers";
 export const GETUSERCUSTOMERS = "getUserCustomers";
 export const GETUSERMESSAGES = "getUserInbox";
 export const GETSENTMESSAGES = "getUserSent";
