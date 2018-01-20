@@ -9,7 +9,6 @@ import swal from 'sweetalert';
 
 
 const AsyncUnauthorizedLayout = asyncComponent(() => import('../layouts/Unauthorized.jsx'));
-console.log(AsyncUnauthorizedLayout)
 
 class Main extends Component{
 
