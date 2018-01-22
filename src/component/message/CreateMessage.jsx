@@ -59,13 +59,6 @@ class CreateMessages extends Component{
 						<div className="panel-wrapper collapse in">
 							<div className="panel-body">
 								<form >
-									<div className={this.state.err.from.length > 0?"has-error form-group":"form-group"}>
-										<label htmlFor="" className="control-label">
-											From
-										</label>
-										<input className="form-control" id="from" name="from" value={this.state.from} onChange={this.handleInputChange} />
-										<span className="error-text">{this.state.err.from}</span>
-									</div>
 									<div className={this.state.err.to.length > 0?"has-error form-group":"form-group"}>
 										<label htmlFor="" className="control-label">
 											To
@@ -84,7 +77,7 @@ class CreateMessages extends Component{
 										<label htmlFor="" className="control-label">
 											Body
 										</label>
-										<input className="form-control" id="body" name="body" value={this.state.body} rows="7" onChange={this.handleInputChange} />
+										<textarea className="form-control" id="body" name="body" value={this.state.body} rows="7" onChange={this.handleInputChange}></textarea>
 										<span className="error-text">{this.state.err.body}</span>
 									</div>
 									<div className="form-actions mt-10">
