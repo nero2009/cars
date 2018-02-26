@@ -11,9 +11,9 @@ class Customer extends Component{
 			this.state={header:[],rows:[],data:[],pageOfItems:[],pager:{}}
 	}
 	componentDidMount(){
-		const {GETUSERCUSTOMERS,DEALERS} = this.props.Constants;
+		const {GETCUSTOMERS,DEALERS} = this.props.Constants;
 		const Id=this.props.user.dealerId;
-		this.props.ServiceObj.getItem(DEALERS,GETUSERCUSTOMERS,Id)
+		this.props.ServiceObj.getItem(DEALERS,GETCUSTOMERS,Id)
 		.then(({data})=>{
 			this.setState({data:data || []});
 		})

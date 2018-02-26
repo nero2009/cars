@@ -83,6 +83,7 @@ class CreateMessages extends Component{
 		.catch(err=>{
 			this.setState({sending:false});
 			this.props.failedRequest.call(this,"Message not sent.");
+
 		})
 	}
 
@@ -118,6 +119,7 @@ class CreateMessages extends Component{
 										</label>
 										<textarea className="form-control" id="body" name="body" rows="7" value={this.state.body} onChange={this.handleInputChange}>
 										</textarea>
+
 										<span className="error-text">{this.state.err.body}</span>
 									</div>
 									<div className="form-actions mt-10">

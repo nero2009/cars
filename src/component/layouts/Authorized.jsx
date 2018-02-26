@@ -12,6 +12,7 @@ import CreateAgents from '../Agents/CreateAgents.jsx'
 import EditAgents from '../Agents/EditAgents.jsx'
 import CreateMessage from '../message/CreateMessage.jsx'
 import ViewMessage from '../message/ViewMessage.jsx'
+import SentMessages from '../message/SentMessages.jsx'
 import ViewAgents from '../Agents/ViewAgents.jsx'
 import CreateSales from '../sales/CreateSales.jsx'
 import EditSales from '../sales/EditSales.jsx'
@@ -65,7 +66,7 @@ const BreadcrumbsItem = ({ ...rest, match }) => (
         }
            {
            	! match.isExact && <Link to={match.url || ''}>
-               <span> {routeMap(match.url) ||  match.url.split('/').pop()}</span>
+				<span>{routeMap(match.url) ||  match.url.split('/').pop()}</span>&nbsp;/
             </Link>
            } 
         </li>
@@ -148,7 +149,8 @@ class Authorized extends Component{
 							<Route path={`${this.props.match.path}/dealers/:id`}  render={(props)=>(<DealerView {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 
 							<Route path={`${this.props.match.path}/create-message`} render={(props)=>(<CreateMessage {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
-							<Route path={`${this.props.match.path}/view-message`} render={(props)=>(<ViewMessage {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
+							<Route path={`${this.props.match.path}/view-message`} render={(props) => (<ViewMessage {...props} {...this.state.fakeProps} {...this.props} match={props.match} />)} />
+							<Route path={`${this.props.match.path}/sent-messages`} render={(props)=>(<SentMessages {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 							<Route path={`${this.props.match.path}/create-sales`} render={(props)=>(<CreateSales {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 							<Route path={`${this.props.match.path}/edit-sales/:id`} render={(props)=>(<EditSales {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>
 							<Route path={`${this.props.match.path}/view-sales`} render={(props)=>(<ViewSales {...props} {...this.state.fakeProps} {...this.props} match={props.match}/>)}/>

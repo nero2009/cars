@@ -7,7 +7,7 @@ class EditVehicles extends Component{
 		this.handleInputChange=this.handleInputChange.bind(this);
 		this.submit=this.submit.bind(this);
 		this.clear=this.clear.bind(this);
-		this.state={vin:'',manufacturer:'',model:'',modelYear:'',color:'',carStands:[],standId:'',isSold:'',
+		this.state={vin:'',manufacturer:'',model:'',modelYear:'',color:'',carStands:[],standId:'',isSold:'',recievedData:[],
 		bodyType:'',registered:'',regNo:'',submitBtn:this.props.submitBtn,sending:false,
 		err:{isSold:'',standId:'',vin:'',manufacturer:'',model:'',modelYear:'',color:'',bodyType:'',registered:'',regNo:'',general:'',all: new Set()},disabled:false }
 	}

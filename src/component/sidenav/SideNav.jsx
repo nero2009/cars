@@ -91,11 +91,17 @@ class SideNav extends Component{
 						<li>
 							<Link  to="/home/view-sales">View all sales</Link>
 						</li>
+<<<<<<< HEAD
 						
+=======
+						{/* <li>
+							<Link  to="/home/create-sales">Add New</Link>
+						</li> */}
+>>>>>>> d2d6a1c8e6f235096ea3f2ec85713e95f9191562
 					</ul>
 				</li>
 				<li>
-					<a href="javascript:void(0);" data-toggle="collapse" data-target="#message_dr"><div className="pull-left"><i className="zmdi zmdi-email mr-20"></i><span className="right-nav-text">Message(s)</span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
+					<a href="javascript:void(0);" data-toggle="collapse" data-target="#message_dr"><div className="pull-left"><i className="zmdi zmdi-email mr-20"></i><span className="right-nav-text">Messages</span></div><div className="pull-right"><i className="zmdi zmdi-caret-down"></i></div><div className="clearfix"></div></a>
 					<ul id="message_dr" className="collapse collapse-level-1">
 						<li>
 							<Link  to="/home/view-message">Inbox</Link>
