@@ -35,7 +35,6 @@ export const GETUSERMESSAGES = "getUserInbox";
 export const GETSENTMESSAGES = "getUserSent";
 export const GETUSERSALES = "getDealerSales";
 export const GETCUSTOMERBYEMAIL="getCustomerbyEmail";
-export const SALES="sales";
 export const BULKSALE="bulkSale";
 export const ACCOUNTS="accounts";
 export const MAILINGLIST="mailingList";

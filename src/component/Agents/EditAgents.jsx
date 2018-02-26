@@ -18,7 +18,7 @@ class EditAgent extends Component{
 		const {GET,SALESPEOPLE}=this.props.Constants;
 		this.props.ServiceObj.getItem(SALESPEOPLE,GET,id)
 		.then(({data})=>{
-			this.setState({data:{...data},receivedData:{...data}});
+			this.setState({data,receivedData:data});
 		})
 		.catch(err=>{
 
@@ -46,10 +46,11 @@ class EditAgent extends Component{
 		this.props.startRequest.call(this);
 		const {data}=this.state;
 		const {SALESPEOPLE,UPDATE}=this.props.Constants;
-		this.props.ServiceObj.createItem({...data},SALESPEOPLE,UPDATE)
+		this.props.ServiceObj.updateItem(SALESPEOPLE,UPDATE, data, data.id || 0)
 		.then(({data})=>{
 			this.props.successRequest.call(this,"Agent updated.");
 			setTimeout(() => this.props.history.goBack(), 0);
+			
 		})
 		.catch(err=>{
 			this.props.failedRequest.call(this,"Agent not updated.");
@@ -74,7 +75,7 @@ class EditAgent extends Component{
 										<label htmlFor="" className="control-label">
 											Name
 										</label>
-										<input className="form-control" name="fullName" id="fullName" value={this.state.data.fullName} onChange={this.handleInputChange} />
+										<input className="form-control" name="fullName" id="fullName" value={this.state.data.dealerId} onChange={this.handleInputChange} />
 										<span className="error-text">{this.state.err.fullName}</span>
 									</div>
 									<div className={this.state.err.email.length > 0?"has-error form-group":"form-group"}>
