@@ -91,9 +91,7 @@ class SideNav extends Component{
 						<li>
 							<Link  to="/home/view-sales">View all sales</Link>
 						</li>
-						<li>
-							<Link  to="/home/create-sales">Add New</Link>
-						</li>
+						
 					</ul>
 				</li>
 				<li>

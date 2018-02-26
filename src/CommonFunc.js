@@ -215,8 +215,8 @@ export const validationRules={
 	dealershipName:['required','string'],
 	to:['required','string'],
 	from:['string'],
-	subject:['string'],
-	body:['string'],
+	subject:['required','min:4','string'],
+	body:['required','min:10','string'],
 	cost:['required','number'],
 	amount:['required','number'],
 	balance:['required','number'],
@@ -230,7 +230,8 @@ export const validationRules={
 	address:['required','string'],
 	otherName:['min:3','max:20','string'],
 	salesPrice:['required','number'],
-	amountPaid:['required','number']
+	amountPaid:['required','number'],
+	personId:['required'],
 
 }
 

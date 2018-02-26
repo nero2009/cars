@@ -14,6 +14,9 @@ class EditCustomer extends Component{
 		
 	}
 	componentWillMount(){
+		
+	}
+	componentDidMount(){
 		const id=this.props.match.params.id;
 		const {GETPUBLIC,CUSTOMERS}=this.props.Constants;
 		this.props.ServiceObj.getItem(CUSTOMERS,GETPUBLIC,id)
@@ -23,8 +26,7 @@ class EditCustomer extends Component{
 		.catch(err=>{
 
 		})
-	}
-	componentDidMount(){
+
 		this.props.ServiceObj.getAllStates()
 		.then(({data})=>{
 			this.setState({receivedStates:data,requestingStates:false});
@@ -35,7 +37,8 @@ class EditCustomer extends Component{
 		
 	}
 	handleInputChange(e){
-		this.setState({[e.target.name]:e.target.value});
+		console.log({[e.target.name]:e.target.value})
+		this.setState({data:{...this.state.data,[e.target.name]:e.target.value}});
 		this.props.validator({name:e.target.id,value:e.target.value},'customer',this);
         return;
 	}

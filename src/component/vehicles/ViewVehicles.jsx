@@ -3,20 +3,20 @@ import { Link } from 'react-router-dom';
 import { Table } from '../tables/Table.jsx'
 import Pagination from '../pagination/Pagination.jsx'
 
+
 class ViewVehicles extends Component {
 	constructor(props) {
 		super(props);
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.state = {
-			header: [], rows: [], data: [], pageOfItems: [], pager: {}, salesData: { salesPrice: "", amountPaid: "" },customerObj:{},
+			header: [], rows: [], data: [], pageOfItems: [], salesPersons:[], pager: {}, salesData: { salesPrice: "", amountPaid: "",personId:""},customerObj:{},
 			customerEmail: '', showSalesForm: false, isMakingSale: false,vehicleForSale:{},
 			isCheckingCustomerEmail: false, showCustomerDoesNotExistMsg: false,
 			err: { customerEmail: '', general: '', salesPrice: "", amountPaid: "", all: new Set() }
 		}
 	}
-
 	componentDidMount() {
-		const { VEHICLE, GETALL } = this.props.Constants;
+		const { VEHICLE, GETALL,GETUSERAGENTS,DEALERS } = this.props.Constants;
 		this.props.ServiceObj.getItems(VEHICLE, GETALL)
 			.then(({ data }) => {
 				this.setState({ data });
@@ -24,9 +24,16 @@ class ViewVehicles extends Component {
 			.catch(err => {
 
 			})
+			this.props.ServiceObj.getItem(DEALERS,GETUSERAGENTS,this.props.user.id)
+			.then(({ data }) => {
+				this.setState({salesPersons: data });
+			})
+			.catch(err => {
+
+			})	
+
 		this.setState({
-			header: ['#', 'manufacturer', 'model', 'modelYear', 'color', 'bodyType', 'registered', 'sold', <i className="fa fa-gear"></i>],
-			rows: [{ no: 1, vin: 'drt455HQ', manufacturer: 'Ford', model: 'Ranger', modelYear: '2017', color: 'black', bodyType: 'muscle', registered: 'yes', regNo: '10092hq', action: <Link to="#"><i className="fa fa-pencil"></i></Link> }]
+			header: ['#', 'manufacturer', 'model', 'modelYear', 'color', 'bodyType', 'registered', 'sold', <i className="fa fa-gear"></i>]
 		})
 	}
 	onChangePage(pageOfItems, pager) {
@@ -114,16 +121,23 @@ class ViewVehicles extends Component {
 	}
 	makeSale() {
 		this.setState({ isMakingSale: true });
-		this.props.validatorAll([
-			{ name: 'amountPaid', value: this.state.salesData.amountPaid },{ name: 'salesPrice', value: this.state.salesData.salesPrice }],
-			'Sales', this)
+		if (this.props.user.dealerId) {
+			this.props.validatorAll([
+				{ name: 'amountPaid', value: this.state.salesData.amountPaid },{ name: 'personId', value: this.state.salesData.personId },{ name: 'salesPrice', value: this.state.salesData.salesPrice }],
+				'Sales', this)
+		}
+		else{
+			this.props.validatorAll([{ name: 'amountPaid', value: this.state.salesData.amountPaid },{ name: 'salesPrice', value: this.state.salesData.salesPrice }],
+				'Sales', this)
+		}
+		
 		if (this.state.err.all.size > 0) {
 			this.setState({ isMakingSale: false })
 			return;
 		}
 		const vehicleForSale = this.state.pageOfItems.find(item => item.Id === this.state.singleSaleVehicleId);
 		const data = {
-			personId:this.props.user.dealerId || this.props.user.personId,
+			personId:this.props.user.dealerId? this.state.salesData.personId:this.props.user.personId,
 			customerId:this.state.customerObj.customerId,
 			amountPaid:parseInt(this.state.salesData.amountPaid),
 			cost:parseInt(this.state.salesData.salesPrice),
@@ -132,7 +146,6 @@ class ViewVehicles extends Component {
 		
 		this.makeSaleRequest.call(this,data)
 		.then(data=>{
-			console.log(data)
 			this.setState({ isMakingSale: false });
 			this.props.successRequest.call(this,"Sale successful.");
 			window.$('#myModal').modal('hide');
@@ -144,7 +157,6 @@ class ViewVehicles extends Component {
 
 	}
 	makeSaleRequest(data){
-		console.log(data)
 		const {BULKSALE,SALES} = this.props.Constants;
 		return this.props.ServiceObj.createItem(data,SALES,BULKSALE);
 	}
@@ -184,6 +196,18 @@ class ViewVehicles extends Component {
 													<label >Customer Email</label>
 													<input type="text" name="customerEmail" className="form-control noBorder" readOnly value={this.state.customerEmail} />
 												</div>
+												{
+													this.props.user.dealerId && 
+													<div className="form-group mb-20">
+														<select name="personId" className="form-control noBorder" value={this.state.salesData.personId} id="personId" onChange={this.handleSalesInputChange.bind(this)}>
+															<option value="">Select sales person</option>
+															{
+																this.state.salesPersons.map((item,index)=><option value={item.personId} key={++index}>{item.get_user_info.name}</option>)
+															}
+														</select>
+													</div>
+												}
+												
 												<div className="form-group mb-20">
 													<label >Vehicle</label>
 													<input type="text" name="customerEmail" className="form-control noBorder" readOnly value={this.getSelectVehicleNameString.call(this)} />

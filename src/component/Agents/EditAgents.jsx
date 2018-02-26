@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 
-class CreateAgents extends Component{
+class EditAgent extends Component{
 	constructor(props) {
 		super(props);
 		this.handleInputChange=this.handleInputChange.bind(this);
@@ -32,7 +32,7 @@ class CreateAgents extends Component{
 	}
 
 	clear(){
-		this.setState({data:{fullName:'',email:'',contactNo:'',allowMobile:''}})
+		this.setState({data:{...this.state.receivedData}})
 	}
 
 	submit(){
@@ -120,4 +120,4 @@ class CreateAgents extends Component{
 	}
 }
 
-export default CreateAgents;
+export default EditAgent;

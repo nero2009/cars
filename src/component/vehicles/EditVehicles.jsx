@@ -15,8 +15,8 @@ class EditVehicles extends Component{
 		const id=this.props.match.params.id;
 		const {GET,VEHICLE}=this.props.Constants;
 		this.props.ServiceObj.getItem(VEHICLE,GET,id)
-		.then(({data:{vin,manufacturer,model,Id,modelYear,bodyType,regNo,isRegistered,color,recordStatus,standId,isSold}})=>{
-			this.setState({vin,manufacturer,model,modelYear,bodyType,regNo,Id,registered:isRegistered,color,recordStatus,standId,isSold});
+		.then(({data})=>{
+			this.setState({...data,recievedData:data,registered:data.isRegistered});
 		})
 		.catch(err=>{
 
@@ -41,10 +41,10 @@ class EditVehicles extends Component{
 	}
 
 	clear(){
-		this.setState({vin:this.state.recievedData.vin,
+		this.setState({vin:this.state.recievedData.vin,isSold:this.state.recievedData.isSold,
 			manufacturer:this.state.recievedData.manufacturer,standId:this.state.recievedData.standId,isSold:this.state.recievedData.isSold,
 			model:this.state.recievedData.model,modelYear:this.state.recievedData.modelYear,color:this.state.recievedData.color,
-			bodyType:this.state.recievedData.bodyType,registered:this.state.recievedData.registered,regNo:this.state.recievedData.regNo})
+			bodyType:this.state.recievedData.bodyType,registered:this.state.recievedData.isRegistered,regNo:this.state.recievedData.regNo})
 	}
 
 	submit(){
@@ -61,10 +61,10 @@ class EditVehicles extends Component{
             return;
         }
         this.props.startRequest.call(this);
-		const {vin,manufacturer,model,modelYear,color,bodyType,registered,regNo,recordStatus,Id,standId} = this.state;
-		 data ={VIN:vin,manufacturer,standId,model,modelYear,color,bodyType,isRegistered:registered,regNo,isSold:false,recordStatus}
+		const {vin,manufacturer,model,modelYear,color,bodyType,registered,regNo,recordStatus,Id,standId,isSold} = this.state;
+		 data ={VIN:vin,manufacturer,standId,model,modelYear,color,bodyType,isRegistered:parseInt(registered)?true:false,regNo,isSold:parseInt(isSold)?true:false,recordStatus}
 		if (parseInt(this.state.registered) === 0) {
-			data ={VIN:vin,manufacturer,standId,model,modelYear,color,bodyType,isRegistered:registered,isSold:false,recordStatus}
+			data ={VIN:vin,manufacturer,standId,model,modelYear,color,bodyType,isRegistered:parseInt(registered)?true:false,isSold:parseInt(isSold)?true:false,recordStatus}
 		}
 		
 		const {VEHICLE,UPDATE}=this.props.Constants;
@@ -149,7 +149,7 @@ class EditVehicles extends Component{
 									</div>
 									<div className={this.state.err.registered.length >0?"has-error form-group":"form-group"}>
 									    <label className="control-label" >Registered</label>
-									    <select class="form-control" id="registered" value={this.state.registered} onChange={this.handleInputChange} name="registered">
+									    <select className="form-control" id="registered" value={this.state.registered} onChange={this.handleInputChange} name="registered">
 									      <option value="1" >Yes</option>
 									      <option value="0">No</option>
 									    </select>

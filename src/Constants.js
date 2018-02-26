@@ -34,3 +34,6 @@ export const GETSENTMESSAGES = "getUserSent";
 export const GETCUSTOMERBYEMAIL="getCustomerbyEmail";
 export const SALES="sales";
 export const BULKSALE="bulkSale";
+export const ACCOUNTS="accounts";
+export const MAILINGLIST="mailingList";
+export const SENDMAIL = "sendMail";
