@@ -13,17 +13,19 @@ class EditCarStand extends Component{
 		
 	}
 	componentWillMount(){
+		
+	}
+	componentDidMount(){
 		const id=this.props.match.params.id;
 		const {GET,CARSTAND}=this.props.Constants;
 		this.props.ServiceObj.getItem(CARSTAND,GET,id)
-		.then(({data:{stateId,name,location,Id,recordStatus,dealerId}})=>{
-			this.setState({name,stateId,location,Id,recordStatus,dealerId});
+		.then(({data})=>{
+			this.setState({...data,recievedData:data});
 		})
 		.catch(err=>{
 
 		})
-	}
-	componentDidMount(){
+
 		this.props.ServiceObj.getAllStates()
 		.then(({data})=>{
 			this.setState({receivedStates:data,requestingStates:false});

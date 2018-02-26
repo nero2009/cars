@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 
 class CreateMessages extends Component{
 	constructor(props) {
@@ -7,15 +9,24 @@ class CreateMessages extends Component{
 		this.handleInputChange=this.handleInputChange.bind(this);
 		this.submit=this.submit.bind(this);
 		this.clear=this.clear.bind(this);
-		this.state={to:'',from:'',subject:'', body:'',submitBtn:this.props.submitBtn,
-		err:{to:'',from:'',subject:'', body:'',general:'',all:new Set()},disabled:false }
+		this.state={to:'',from:'',subject:'', body:'',submitBtn:this.props.submitBtn,mailingList:[],
+		err:{to:'',subject:'', body:'',general:'',all:new Set()},disabled:false }
 		
 	}
-
 	componentDidMount() {
-		
-	}
+		const { MAILINGLIST, ACCOUNTS} = this.props.Constants;
 
+		this.props.ServiceObj.getItem(ACCOUNTS, MAILINGLIST,this.props.user.id)
+		.then(({data}) => {
+			const selectAllArray=[{value:'all',label:'all'}];
+			const recievedArray= data.map(item=>({value:item.email,label:item.name,isAdmin:item.isAdmin?item.isAdmin:false }));
+			const mailingList = selectAllArray.concat(recievedArray);
+			this.setState({mailingList});
+		})
+		.catch(err => {
+
+		})
+	}
 	handleInputChange(e){
 		this.setState({[e.target.name]:e.target.value})
 		this.props.validator({name:e.target.id,value:e.target.value},'Message',this);
@@ -25,24 +36,53 @@ class CreateMessages extends Component{
 	clear(){
 		this.setState({to:'',from:'',subject:'',body:''})
 	}
+	handleSelectChange(data){
+		const containsAll=data.find(item=>item.value === "all");
+		if(containsAll){
+			this.setState({to:[containsAll]})
+			return;
+		}
+		const containsAdmin=data.find(item=>item.isAdmin === true);
+		if(containsAdmin){
+			this.setState({to:[containsAdmin]})
+			return;
+		}
+		this.setState({to:data})
+		this.props.validator({name:"to",value:data},'Message',this);
+        return;
+	}
 
 	submit(){
-		this.props.validatorAll([{name:'to',value:this.state.to},{name:'from',value:this.state.from},{name:"subject",value:this.state.subject},
+		this.props.validatorAll([{name:'to',value:this.state.to},{name:"subject",value:this.state.subject},
 			{name:"body",value:this.state.body}],'Message',this);
         if (this.state.err.all.size > 0) {
             // this.setState({sending:false,disabled:false})
             return;
         }
 		this.props.startRequest.call(this);
-		const { data } = this.state;
-		const { MESSAGES, CREATE } = this.props.Constants;
-		this.props.ServiceObj.createItem({ ...data }, MESSAGES, CREATE)
-		.then(({ data }) => {
-			this.props.successRequest.call(this, "Message Sent.");
+
+		const {to,subject,body} = this.state;
+		const from = this.props.user.email;
+		const {SENDMAIL,MESSAGES}=this.props.Constants;
+		let TO;
+
+		if (to.length == 1) {
+			TO = to[0].value;
+		}
+		else{
+			TO= to.map(item=>item.value);
+		}
+		
+		const data ={to:TO,from,subject,body};
+		this.props.ServiceObj.createItem(data,MESSAGES,SENDMAIL)
+		.then(({data})=>{
+			this.props.successRequest.call(this,"Message sent.");
+			this.setState({sending:false});
 			this.clear.call(this)
 		})
-		.catch(err => {
-			this.props.failedRequest.call(this, "Message not Sent.");
+		.catch(err=>{
+			this.setState({sending:false});
+			this.props.failedRequest.call(this,"Message not sent.");
 
 		})
 	}
@@ -63,7 +103,7 @@ class CreateMessages extends Component{
 										<label htmlFor="" className="control-label">
 											To
 										</label>
-										<input className="form-control" id="to" name="to" value={this.state.to} onChange={this.handleInputChange} />
+										<Select  clearable={true} multi={true} id="to" name="to" value={this.state.to} onChange={this.handleSelectChange.bind(this)} options={this.state.mailingList}/>
 										<span className="error-text">{this.state.err.to}</span>
 									</div>
 									<div className={this.state.err.subject.length > 0?"has-error form-group":"form-group"}>
@@ -77,7 +117,9 @@ class CreateMessages extends Component{
 										<label htmlFor="" className="control-label">
 											Body
 										</label>
-										<textarea className="form-control" id="body" name="body" value={this.state.body} rows="7" onChange={this.handleInputChange}></textarea>
+										<textarea className="form-control" id="body" name="body" rows="7" value={this.state.body} onChange={this.handleInputChange}>
+										</textarea>
+
 										<span className="error-text">{this.state.err.body}</span>
 									</div>
 									<div className="form-actions mt-10">

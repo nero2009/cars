@@ -76,7 +76,7 @@ class Unauthorized extends Component{
 		})
 		.catch(err=>{
 			this.setState({submitButton: 'Login'});
-			//console.log(err.response);
+			console.log(err.name);
 			//failedRequest.call(this,"Login Unsuccessful");
 			this.setState((prevState, props)=>{
 				return {showEror: !prevState.showEror}
