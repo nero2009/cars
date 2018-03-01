@@ -1,5 +1,5 @@
 export const LOGINURL = 'common/login'
-export const BASEURI ='http://api-carfacts.camstill.com/public/index.php/api/'
+export const BASEURI ='http://localhost:8000/api/'
 //"http://api-carfacts.camstill.com/public/index.php/api/"
 //'http://localhost/laolu/dmsserver/public/api/'
 //'http://localhost:8000/api/'

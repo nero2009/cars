@@ -18,7 +18,7 @@ class EditAgent extends Component{
 		const {GET,SALESPEOPLE}=this.props.Constants;
 		this.props.ServiceObj.getItem(SALESPEOPLE,GET,id)
 		.then(({data})=>{
-			this.setState({data,receivedData:data});
+			this.setState({data,receivedData:data, otherData:data.get_user_info});
 		})
 		.catch(err=>{
 
@@ -75,14 +75,14 @@ class EditAgent extends Component{
 										<label htmlFor="" className="control-label">
 											Name
 										</label>
-										<input className="form-control" name="fullName" id="fullName" value={this.state.data.dealerId} onChange={this.handleInputChange} />
+										<input className="form-control" name="fullName" id="fullName" value={this.state.otherData} onChange={this.handleInputChange} />
 										<span className="error-text">{this.state.err.fullName}</span>
 									</div>
 									<div className={this.state.err.email.length > 0?"has-error form-group":"form-group"}>
 										<label htmlFor="" className="control-label">
 											Email
 										</label>
-										<input className="form-control" type="email" name="email" id="email" value={this.state.data.email} onChange={this.handleInputChange} />
+										<input className="form-control" type="email" name="email" id="email" value={this.state.otherData} onChange={this.handleInputChange} />
 										<span className="error-text">{this.state.err.email}</span>
 									</div>
 									
