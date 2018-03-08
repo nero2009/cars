@@ -20,7 +20,6 @@ class SideNav extends Component{
 			
 		});
 	}
-
 	render(){
 		return (
 			<div>
@@ -91,7 +90,6 @@ class SideNav extends Component{
 						<li>
 							<Link  to="/home/view-sales">View all sales</Link>
 						</li>
-
 					</ul>
 				</li>
 				<li>
@@ -154,5 +152,4 @@ class SideNav extends Component{
 			)
 	}
 }
-
 export default SideNav;
