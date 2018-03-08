@@ -7,7 +7,7 @@ class EditAgent extends Component{
 		this.handleInputChange=this.handleInputChange.bind(this);
 		this.submit=this.submit.bind(this);
 		this.clear=this.clear.bind(this);
-		this.state={data:{fullName:'',email:'',contactNo:'',allowMobile:''},receivedStates:[],
+		this.state={data:{fullName:'foo',email:'',contactNo:'',allowMobile:''},receivedStates:[],
 		err:{fullName:'',allowMobile:'',email:'',contactNo:'',all: new Set()},
 		disabled:false,submitBtn:this.props.submitBtn
 		}

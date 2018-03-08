@@ -63,7 +63,12 @@ class ViewVehicles extends Component {
 				Registered: item.isRegistered ? 'Yes' : 'No',
 				Sold: item.isSold ? 'Yes' : 'No',
 				Actions: <div><Link to={`/home/vehicles/edit/${item.Id}`} className="mr-15 btn btn-info"><i className="fa fa-pencil"></i></Link>
+				{
+					item.isSold ? 
+					'' 
+					: 
 					<a href="" className="mr-15 btn btn-success" onClick={this.openModal.bind(this, item.Id)}><i className="fa fa-money"></i></a>
+				}
 				</div>
 			}
 		})
