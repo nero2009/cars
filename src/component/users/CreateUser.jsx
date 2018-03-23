@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
+import FormContainer from '../FormContainer'
 
 class CreateUser extends Component{
 	constructor(props) {
 		super(props);
-		this.handleInputChange=this.handleInputChange.bind(this);
-		this.submit=this.submit.bind(this);
-		this.clear=this.clear.bind(this);
+		
 		this.state={name:'',email:'',password:'',submitBtn:this.props.submitBtn,disabled:false,
 		err:{name:'',email:'',password:'',general:'',all: new Set()}};
 	}
@@ -43,15 +42,8 @@ class CreateUser extends Component{
 	}
 	render(){
 		return(
-				<div className="row">
-				<div className="col-md-6 col-md-offset-3">
-					<div className="panel panel-default card-view panel-refresh">
-					<div className="panel-heading">
-						<div className="clearfix"></div>
-					</div>
-					<div className="panel-wrapper collapse in">
-						<div className="panel-body">
-							<form >
+				<FormContainer>
+					<form >
 						
 						
 						<div className={this.state.err.name.length > 0?"has-error form-group":"form-group"}>
@@ -85,13 +77,9 @@ class CreateUser extends Component{
 						</div>
 						
 					</form>
-						</div>
-					</div>
-				</div>
-				</div>
-				
-				
-			</div>
+				</FormContainer>
+							
+						
 			)
 	}
 }

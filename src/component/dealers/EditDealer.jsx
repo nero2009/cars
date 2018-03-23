@@ -4,9 +4,6 @@ import {Link} from 'react-router-dom';
 class EditDealer extends Component{
 	constructor(props) {
 		super(props);
-		this.handleInputChange=this.handleInputChange.bind(this);
-		this.submit=this.submit.bind(this);
-		this.clear=this.clear.bind(this);
 		this.state={data:{stateId:'',contactNumber:'',contactName:'',dealershipName:''},receivedStates:[],submitBtn:this.props.submitBtn,requestingStates:true,
 		err:{name:'',contactName:'',contactNumber:'',state:'',general:'',all:new Set()},
 		disabled:false};
@@ -35,15 +32,15 @@ class EditDealer extends Component{
 		})
 		
 	}
-	handleInputChange(e){
+	handleInputChange=(e)=>{
 		this.setState({data:{...this.state.data,[e.target.name]:e.target.value}});
 		this.props.validator({name:e.target.id,value:e.target.value},'dealer',this);
         return;
 	}
-	clear(){
+	clear=()=>{
 		this.setState({data:this.state.receivedData})
 	}
-	submit(){
+	submit=()=>{
 		//this.props.validatorAll([{name:'name',value:this.state.name},{name:'location',value:this.state.location},{name:"state",value:this.state.stateId}],'car stand',this);
         if (this.state.err.all.size > 0) {
             // this.setState({sending:false,disabled:false})

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import Select from 'react-select';
+import TextInput from '../textInput'
+import TextAreaComponent from '../TextAreaComponent'
+
 import 'react-select/dist/react-select.css';
 
 class CreateMessages extends Component{
 	constructor(props) {
 		super(props);
-		this.handleInputChange=this.handleInputChange.bind(this);
-		this.submit=this.submit.bind(this);
-		this.clear=this.clear.bind(this);
 		this.state={to:'',from:'',subject:'', body:'',submitBtn:this.props.submitBtn,mailingList:[],
 		err:{to:'',subject:'', body:'',general:'',all:new Set()},disabled:false }
 		
@@ -27,16 +27,16 @@ class CreateMessages extends Component{
 
 		})
 	}
-	handleInputChange(e){
+	handleInputChange=(e)=>{
 		this.setState({[e.target.name]:e.target.value})
 		this.props.validator({name:e.target.id,value:e.target.value},'Message',this);
         return;
 	}
 
-	clear(){
+	clear=()=>{
 		this.setState({to:'',from:'',subject:'',body:''})
 	}
-	handleSelectChange(data){
+	handleSelectChange=(data)=>{
 		const containsAll=data.find(item=>item.value === "all");
 		if(containsAll){
 			this.setState({to:[containsAll]})
@@ -52,7 +52,7 @@ class CreateMessages extends Component{
         return;
 	}
 
-	submit(){
+	submit=()=>{
 		this.props.validatorAll([{name:'to',value:this.state.to},{name:"subject",value:this.state.subject},
 			{name:"body",value:this.state.body}],'Message',this);
         if (this.state.err.all.size > 0) {
@@ -107,18 +107,12 @@ class CreateMessages extends Component{
 										<span className="error-text">{this.state.err.to}</span>
 									</div>
 									<div className={this.state.err.subject.length > 0?"has-error form-group":"form-group"}>
-										<label htmlFor="" className="control-label">
-											Subject
-										</label>
-										<input className="form-control" id="subject" name="subject" value={this.state.subject} onChange={this.handleInputChange} />
+										<TextInput label="Subject" name="subject" id="subject" value={this.state.subject} handleChange={this.handleInputChange}/>
 										<span className="error-text">{this.state.err.subject}</span>
 									</div>
 									<div className={this.state.err.body.length > 0?"has-error form-group":"form-group"}>
-										<label htmlFor="" className="control-label">
-											Body
-										</label>
-										<textarea className="form-control" id="body" name="body" rows="7" value={this.state.body} onChange={this.handleInputChange}>
-										</textarea>
+										
+										<TextAreaComponent label="Body" name="body" id="body" value={this.state.body} handleChange={this.handleInputChange}/>
 
 										<span className="error-text">{this.state.err.body}</span>
 									</div>

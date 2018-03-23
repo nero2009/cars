@@ -11,6 +11,7 @@ import Main from './component/main/Main.jsx';
 import registerServiceWorker from './registerServiceWorker';
 
 
+
 const App=()=>(<Router>
 				<Main />
 			</Router>);

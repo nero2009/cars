@@ -78,9 +78,9 @@ const BreadcrumbsItem = ({ ...rest, match }) => (
 class Authorized extends Component{
 
 	constructor(props){
-			super(props);
-			this.state={isSignedIn:false,user:{},token:'',fakeProps:{},sending:true,page:{}};
-	}
+		super(props);
+		this.state={isSignedIn:false,user:{},token:'',fakeProps:{},sending:true,page:{}};
+}
 	componentWillMount(){
 		const LoaderButton=<span><i className="fa fa-circle-o-notch fa-spin"></i> Loading</span>;
 		localforage.getItem(USERKEY)
@@ -90,8 +90,8 @@ class Authorized extends Component{
 				const ServiceObj=Service(BASEURI,Axios,user.token);
 				this.setState({user})
 				this.setState({isSignedIn:true,sending:false,fakeProps:{swal,ServiceObj,user:this.state.user,Constants,
-					 failedRequest,
-					 validator,validatorAll,LoaderButton,startRequest,successRequest,submitBtn:`Submit`}})
+					failedRequest,
+					validator,validatorAll,LoaderButton,startRequest,successRequest,submitBtn:`Submit`}})
 				return;
 			}
 			
@@ -106,6 +106,8 @@ class Authorized extends Component{
 		
 	}
 
+	
+
 	render(){
 		return (
 			<div>
@@ -114,6 +116,8 @@ class Authorized extends Component{
 				}
 				{
 					this.state.isSignedIn && 
+				
+					
 					<div className="wrapper theme-1-active pimary-color-red" >
 					<Nav {...this.props}/>
 					<SideNav {...this.props}/>
@@ -169,8 +173,8 @@ class Authorized extends Component{
 					</main>
 					  
 				</div>
-				}
 				
+				}
 				
 			</div>
 			
